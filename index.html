@@ -497,7 +497,7 @@ function colorOf(p){
   return catColor[p.cat] || "#4A4F58";
 }
 
-// SVG 도넛 (세그먼트별 hover 툴팁)
+// SVG 도넛 (세그먼트별 hover/터치 툴팁)
 const donutEl = document.getElementById('donut');
 const tooltipEl = document.getElementById('donutTooltip');
 const svgNS = 'http://www.w3.org/2000/svg';
@@ -508,6 +508,33 @@ const g = document.createElementNS(svgNS,'g');
 g.setAttribute('transform', `rotate(-90 ${D_C} ${D_C})`);
 svg.appendChild(g);
 const allCircles = [];
+
+function highlightSlice(c){
+  allCircles.forEach(o=>o.style.opacity = o===c ? '1' : '.35');
+}
+function resetSlices(){
+  allCircles.forEach(o=>o.style.opacity='1');
+}
+function showTooltip(x, y, p, pct){
+  let html = `<div class="tt-name">${p.name}</div><div class="tt-cat">${p.cat}</div>
+    <div class="tt-row"><span>비중</span><b>${pct.toFixed(2)}%</b></div>
+    <div class="tt-row"><span>금액</span><b>${p.amt.toLocaleString('ko-KR')}원</b></div>`;
+  if(typeof p.ret === 'number'){
+    html += `<div class="tt-row"><span>수익률</span><b style="color:${retColor(p.ret)}">${retStr(p.ret)}</b></div>`;
+  }
+  tooltipEl.innerHTML = html;
+  tooltipEl.style.opacity='1';
+  const pad=16;
+  let tx=x+pad, ty=y+pad;
+  if(tx+180>window.innerWidth) tx = x-180-pad;
+  if(ty+120>window.innerHeight) ty = y-120-pad;
+  tooltipEl.style.left = tx+'px'; tooltipEl.style.top = ty+'px';
+}
+function hideTooltip(){
+  resetSlices();
+  tooltipEl.style.opacity='0';
+}
+
 let cum=0;
 portfolioFlat.forEach(p=>{
   const pct = p.amt/NAV*100;
@@ -520,33 +547,25 @@ portfolioFlat.forEach(p=>{
   c.setAttribute('stroke-dasharray', `${len} ${D_CIRC-len}`);
   c.setAttribute('stroke-dashoffset', -cum);
   c.style.cursor='pointer';
-  c.addEventListener('mouseenter', ()=>{
-    allCircles.forEach(o=>o.style.opacity = o===c ? '1' : '.35');
-  });
-  c.addEventListener('mousemove', (e)=>{
-    let html = `<div class="tt-name">${p.name}</div><div class="tt-cat">${p.cat}</div>
-      <div class="tt-row"><span>비중</span><b>${pct.toFixed(2)}%</b></div>
-      <div class="tt-row"><span>금액</span><b>${p.amt.toLocaleString('ko-KR')}원</b></div>`;
-    if(typeof p.ret === 'number'){
-      html += `<div class="tt-row"><span>수익률</span><b style="color:${retColor(p.ret)}">${retStr(p.ret)}</b></div>`;
-    }
-    tooltipEl.innerHTML = html;
-    tooltipEl.style.opacity='1';
-    const pad=16;
-    let x=e.clientX+pad, y=e.clientY+pad;
-    if(x+180>window.innerWidth) x = e.clientX-180-pad;
-    if(y+120>window.innerHeight) y = e.clientY-120-pad;
-    tooltipEl.style.left = x+'px'; tooltipEl.style.top = y+'px';
-  });
-  c.addEventListener('mouseleave', ()=>{
-    allCircles.forEach(o=>o.style.opacity='1');
-    tooltipEl.style.opacity='0';
-  });
+  // 데스크톱: 마우스 호버
+  c.addEventListener('mouseenter', ()=>{ highlightSlice(c); });
+  c.addEventListener('mousemove', (e)=>{ showTooltip(e.clientX, e.clientY, p, pct); });
+  c.addEventListener('mouseleave', ()=>{ hideTooltip(); });
+  // 모바일: 탭 (다른 곳 탭/스크롤 시 아래 document 리스너가 닫아줌)
+  c.addEventListener('touchstart', (e)=>{
+    e.stopPropagation();
+    highlightSlice(c);
+    const t = e.touches[0];
+    showTooltip(t.clientX, t.clientY, p, pct);
+  }, {passive:true});
   g.appendChild(c);
   allCircles.push(c);
   cum += len;
 });
 donutEl.appendChild(svg);
+// 도넛 바깥을 탭하거나 스크롤하면 툴팁 닫기 (모바일 대응)
+document.addEventListener('touchstart', hideTooltip, {passive:true});
+window.addEventListener('scroll', hideTooltip, {passive:true});
 
 const ret = (NAV-START_CAPITAL)/START_CAPITAL*100;
 document.getElementById('donutRet').textContent = (ret>=0?'+':'')+ret.toFixed(2)+"%";
