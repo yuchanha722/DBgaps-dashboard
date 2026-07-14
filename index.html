@@ -10,8 +10,8 @@
     --text:#D1D4DC; --text-dim:#868993; --text-faint:#5D606B;
     --sky:#2962FF; --sky-soft:rgba(41,98,255,.14);
     --up:#F23645; --down:#4C8DFF; --warn:#FF9800; --danger:#F23645; --ok:#089981;
-    --mono: 'Roboto Mono', ui-monospace, 'SF Mono', Consolas, monospace;
-    --sans: -apple-system, 'Pretendard', 'Trebuchet MS', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+    --sans: -apple-system, 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{background:var(--bg); color:var(--text); font-family:var(--sans); padding:28px 22px 60px; min-height:100vh;}
@@ -63,6 +63,7 @@
   .leg-cat{color:var(--text-faint); font-size:10.5px; flex-shrink:0;}
   .leg-stats{font-family:var(--mono); color:var(--text-dim); font-size:11px; text-align:right; white-space:nowrap;}
   .leg-ret{font-family:var(--mono); text-align:right; font-size:11px; font-weight:600; padding:2px 6px; border-radius:4px; flex-shrink:0;}
+  .leg-delta{font-family:var(--mono); text-align:right; font-size:9.5px; font-weight:500; margin-left:5px; opacity:.85;}
 
   .cat-list{display:flex; flex-direction:column; gap:12px;}
   .cat-card{background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--catclr,var(--sky)); border-radius:8px; padding:18px 22px;}
@@ -80,6 +81,7 @@
   .h-top{display:flex; align-items:center; gap:9px;}
   .h-row .nm{color:var(--text); font-size:12.5px; font-weight:500; flex:1; min-width:0;}
   .h-row .ret{font-family:var(--mono); text-align:right; font-size:11px; font-weight:600; padding:2px 6px; border-radius:4px; flex-shrink:0;}
+  .h-row .delta{font-family:var(--mono); text-align:right; font-size:9.5px; font-weight:500; margin-left:5px; opacity:.85;}
   .h-bottom{display:flex; justify-content:flex-end; gap:10px; font-family:var(--mono); font-size:11px;}
   .h-row .pc{color:var(--text-dim);}
   .h-row .amt{color:var(--text-faint);}
@@ -158,6 +160,13 @@
   /* comments */
   .comment-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:20px 22px;}
   .c-notice{font-size:11px; color:var(--text-faint); margin-bottom:14px;}
+  .hist-table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:22px;}
+  .hist-table thead th{text-align:left; font-size:11px; color:var(--text-dim); font-weight:700; letter-spacing:.03em; padding:11px 16px; background:var(--panel-2); border-bottom:1px solid var(--border);}
+  .hist-table thead th.num{text-align:right;}
+  .hist-table tbody td{padding:11px 16px; font-size:12.5px; font-family:var(--mono); border-bottom:1px solid var(--border); color:var(--text);}
+  .hist-table tbody tr:last-child td{border-bottom:none;}
+  .hist-table tbody tr:hover{background:var(--panel-2);}
+  .hist-table tbody td.num{text-align:right;}
   .c-list{display:flex; flex-direction:column; gap:10px; max-height:340px; overflow:auto;}
   .c-row{background:var(--panel-2); border:1px solid var(--border); border-radius:5px; padding:11px 14px;}
   .c-head{display:flex; justify-content:space-between; margin-bottom:5px;}
@@ -260,11 +269,17 @@
   </div>
 
   <div class="grid4">
-    <div class="card"><div class="k">현재 수익률</div><div class="v up">-8.87%</div><div class="foot">NAV 911,307,209원<br>(시작자본 대비 -88,692,791원)</div></div>
+    <div class="card"><div class="k">현재 수익률</div><div class="v up">-8.87%</div><div class="foot">NAV 911,307,209원</div></div>
     <div class="card"><div class="k">다음 이벤트</div><div class="v warn" id="nextEvtD">-</div><div class="foot" id="nextEvtTxt">-</div></div>
     <div class="card"><div class="k">이번주 최대 변동성</div><div class="v" style="color:var(--danger)">7/15~16</div><div class="foot">레버리지ETF 대책 발표설 + 금통위 + TSMC 실적 연속</div></div>
     <div class="card"><div class="k">⚠ 한도 체크</div><div class="v" style="color:var(--danger)">해외섹터 10.06%</div><div class="foot">한도(10%) 소폭 초과 — 리밸런싱시 트리밍 필요</div></div>
   </div>
+
+  <div class="sec-title"><h2>일별 수익률 기록</h2><div class="line"></div><span class="hint">거래일마다 누적</span></div>
+  <table class="hist-table">
+    <thead><tr><th>날짜</th><th class="num">NAV</th><th class="num">일간</th><th class="num">누적(시작자본 대비)</th></tr></thead>
+    <tbody id="dailyHistBody"></tbody>
+  </table>
 
   <div class="card" style="margin-bottom:22px;">
     <div class="k">📊 이번주 시장 진단 (7/14 마감 반영)</div>
@@ -345,32 +360,44 @@ const catColor = {
 };
 const shade = { light:{"국내주식_지수":"#6FA8DC","해외주식_지수":"#6FD1DE","해외주식_섹터":"#CB8FE0"} };
 
+// 일별 NAV 기록 (거래일 마감 시점마다 여기에 한 줄씩 추가 — 일간/누적 수익률은 자동 계산됨)
+const dailyHistory = [
+  {date:"2026-07-10", nav:939581839},
+  {date:"2026-07-13", nav:910851374},
+  {date:"2026-07-14", nav:911307209},
+];
+
 const categories = [
   {name:"국내주식_지수", cap:30, items:[
-    {name:"KODEX 200", amt:183451840, ret:-20.09},
-    {name:"KODEX 코스닥150", amt:36354510, ret:-27.34, light:true},
+    {name:"KODEX 200", amt:183451840, ret:-20.09, prevRet:-20.46},
+    {name:"KODEX 코스닥150", amt:36354510, ret:-27.34, prevRet:-26.64, light:true},
   ]},
   {name:"국내주식_섹터", cap:15, items:[
-    {name:"KODEX AI반도체TOP2플러스", amt:136114605, ret:-7.15},
+    {name:"KODEX AI반도체TOP2플러스", amt:136114605, ret:-7.15, prevRet:-8.64},
   ]},
   {name:"해외주식_지수", cap:30, items:[
-    {name:"TIGER 미국나스닥100", amt:113800050, ret:-5.10},
-    {name:"TIGER 미국S&P500", amt:78064270, ret:-2.47, light:true},
+    {name:"TIGER 미국나스닥100", amt:113800050, ret:-5.10, prevRet:-5.24},
+    {name:"TIGER 미국S&P500", amt:78064270, ret:-2.47, prevRet:-2.42, light:true},
   ]},
   {name:"해외주식_섹터", cap:10, items:[
-    {name:"TIGER 미국테크TOP10 INDXX", amt:45578200, ret:-8.87},
-    {name:"ACE 글로벌반도체TOP4 Plus", amt:46081530, ret:-7.78, light:true},
+    {name:"TIGER 미국테크TOP10 INDXX", amt:45578200, ret:-8.87, prevRet:-8.78},
+    {name:"ACE 글로벌반도체TOP4 Plus", amt:46081530, ret:-7.78, prevRet:-9.12, light:true},
   ]},
   {name:"FX 및 원자재", cap:20, items:[]},
-  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:150379740, ret:0.18}]},
+  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:150379740, ret:0.18, prevRet:0.19}]},
   {name:"국내채권_회사채", cap:30, items:[]},
-  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:97782120, ret:-2.30}]},
+  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:97782120, ret:-2.30, prevRet:-2.08}]},
   {name:"해외채권_회사채", cap:30, items:[]},
   {name:"금리연계형/초단기채권", cap:50, items:[]},
 ];
 function retColor(r){ return r>=0 ? 'var(--up)' : 'var(--down)'; }
 function retBg(r){ return r>=0 ? 'rgba(242,54,69,.12)' : 'rgba(76,141,255,.12)'; }
 function retStr(r){ return (r>=0?'+':'')+r.toFixed(2)+'%'; }
+function deltaHtml(cur, prev, cls){
+  if(typeof cur!=='number' || typeof prev!=='number') return '';
+  const d = cur-prev;
+  return `<span class="${cls}" style="color:${retColor(d)}">전일대비 ${d>=0?'+':''}${d.toFixed(2)}%</span>`;
+}
 
 // 출석 (팀원 3명, 7월)
 const members = [
@@ -383,7 +410,6 @@ const attendance = { // "YYYY-MM-DD": [참석자명...]
   "2026-07-09": ["하유찬","남영욱","임우진"],
   "2026-07-10": ["하유찬","남영욱"],
   "2026-07-11": ["남영욱"],
-  "2026-07-14": ["하유찬","임우진"],
   "2026-07-14": ["하유찬","임우진"],
 };
 
@@ -486,6 +512,21 @@ if(upcomingSorted.length){
   document.getElementById('nextEvtTxt').textContent = ne.date.slice(5).replace('-','/')+" "+ne.label;
 }
 
+/* ---- 일별 수익률 기록 ---- */
+const dailyBody = document.getElementById('dailyHistBody');
+let prevNav = null;
+dailyHistory.forEach(h=>{
+  const cum = (h.nav-START_CAPITAL)/START_CAPITAL*100;
+  const daily = prevNav ? (h.nav-prevNav)/prevNav*100 : null;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${h.date}</td>
+    <td class="num">${h.nav.toLocaleString('ko-KR')}원</td>
+    <td class="num" style="color:${daily===null?'var(--text-faint)':retColor(daily)}">${daily===null?'-':retStr(daily)}</td>
+    <td class="num" style="color:${retColor(cum)}; font-weight:700;">${retStr(cum)}</td>`;
+  dailyBody.appendChild(tr);
+  prevNav = h.nav;
+});
+
 /* ---- portfolio + donut + legend ---- */
 const invested = categories.flatMap(c=>c.items.map(i=>({...i, cat:c.name})));
 const investedTotal = invested.reduce((s,i)=>s+i.amt,0);
@@ -576,6 +617,7 @@ portfolioFlat.forEach(p=>{
   const pct=p.amt/NAV*100;
   const row=document.createElement('div'); row.className='leg-row';
   const retHtml = (typeof p.ret === 'number') ? `<div class="leg-ret" style="color:${retColor(p.ret)}; background:${retBg(p.ret)}">${retStr(p.ret)}</div>` : `<div class="leg-ret" style="color:var(--text-faint)">-</div>`;
+  const deltaStr = deltaHtml(p.ret, p.prevRet, 'leg-delta');
   row.innerHTML = `<div class="leg-top">
       <div class="dot" style="background:${colorOf(p)}"></div>
       <div class="leg-name">${p.name}</div>
@@ -583,7 +625,7 @@ portfolioFlat.forEach(p=>{
     </div>
     <div class="leg-bottom">
       <span class="leg-cat">${p.cat}</span>
-      <span class="leg-stats">${pct.toFixed(2)}% · ${p.amt.toLocaleString('ko-KR')}원</span>
+      <span class="leg-stats">${pct.toFixed(2)}% · ${p.amt.toLocaleString('ko-KR')}원${deltaStr}</span>
     </div>`;
   legend.appendChild(row);
 });
@@ -601,7 +643,8 @@ categories.forEach(c=>{
   const holdingsHtml = c.items.length ? c.items.map(i=>{
     const ipct = i.amt/NAV*100;
     const retHtml = (typeof i.ret === 'number') ? `<div class="ret" style="color:${retColor(i.ret)}; background:${retBg(i.ret)}">${retStr(i.ret)}</div>` : `<div class="ret" style="color:var(--text-faint)">-</div>`;
-    return `<div class="h-row"><div class="h-top"><div class="nm">${i.name}</div>${retHtml}</div><div class="h-bottom"><span class="pc">${ipct.toFixed(2)}%</span><span class="amt">${i.amt.toLocaleString('ko-KR')}원</span></div></div>`;
+    const deltaStr = deltaHtml(i.ret, i.prevRet, 'delta');
+    return `<div class="h-row"><div class="h-top"><div class="nm">${i.name}</div>${retHtml}</div><div class="h-bottom"><span class="pc">${ipct.toFixed(2)}%</span><span class="amt">${i.amt.toLocaleString('ko-KR')}원</span>${deltaStr}</div></div>`;
   }).join('') : `<div class="empty-cat">보유 없음</div>`;
   card.innerHTML = `<div class="cat-head"><div class="name">${c.name}</div><div class="usage"><b class="${isOver?'over':''}">${usedPct.toFixed(2)}%</b> / ${c.cap}%</div></div>
     <div class="cat-bar"><div class="cat-fill ${isOver?'over':''}" style="width:${Math.min(barPct,100)}%; background:${isOver?'var(--danger)':catColor[c.name]}"></div></div>
