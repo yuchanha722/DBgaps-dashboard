@@ -336,9 +336,8 @@
   <div class="sec-title"><h2>남은 이벤트 · 요인별 상세 시나리오</h2><div class="line"></div></div>
   <div class="evlist" id="eventList"></div>
 
-  <div class="sec-title"><h2>시장 뉴스 아카이브</h2><div class="line"></div><span class="hint">위 "이번주 시장 진단"에서 갱신되며 빠진 내용을 여기 누적 기록</span></div>
+  <div class="sec-title"><h2>시장 뉴스 아카이브</h2><div class="line"></div></div>
   <div class="comment-card">
-    <div class="c-notice">📰 상단 "이번주 시장 진단"은 항상 최신 내용으로 교체되고, 교체되며 빠지는 이전 내용은 여기에 날짜별로 간단히 쌓아둡니다. 지난 진단도 나중에 돌아볼 수 있게 하기 위함입니다.</div>
     <div class="c-list" id="commentList"></div>
   </div>
 
@@ -508,7 +507,7 @@ function tickClock(){
   document.getElementById('clockTime').textContent = now.toLocaleTimeString('ko-KR');
 }
 tickClock(); setInterval(tickClock, 1000);
-document.getElementById('updatedFoot').textContent = "포트폴리오 데이터 기준 "+PORTFOLIO_ASOF+" · 페이지 조회 시각 기준 날짜/타임라인 자동갱신";
+document.getElementById('updatedFoot').textContent = "포트폴리오 데이터 기준 "+PORTFOLIO_ASOF+" · 페이지 조회 시각 기준 날짜/타임라인 자동갱신 · 하유찬 제작";
 
 /* ---- 다음 이벤트 카드 ---- */
 const upcomingSorted = events.filter(e=>dayNum(e.date)>=dayNum(todayISO)).sort((a,b)=>dayNum(a.date)-dayNum(b.date));
