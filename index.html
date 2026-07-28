@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" style="background:#131722;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#131722">
 <title>GAPS ETF 투자대회 대시보드</title>
 <style>
   :root{
@@ -13,6 +15,7 @@
     --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
     --sans: -apple-system, 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif;
   }
+  html{background:#131722; color-scheme:dark;}
   *{box-sizing:border-box; margin:0; padding:0;}
   body{background:var(--bg); color:var(--text); font-family:var(--sans); padding:28px 22px 60px; min-height:100vh;}
   .wrap{max-width:1240px; margin:0 auto;}
@@ -161,10 +164,11 @@
   /* comments */
   .comment-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:20px 22px;}
   .c-notice{font-size:11px; color:var(--text-faint); margin-bottom:14px;}
-  .hist-table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:22px;}
-  .hist-table thead th{text-align:left; font-size:11px; color:var(--text-dim); font-weight:700; letter-spacing:.03em; padding:11px 16px; background:var(--panel-2); border-bottom:1px solid var(--border);}
+  .hist-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:8px; margin-bottom:22px;}
+  .hist-table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; table-layout:fixed;}
+  .hist-table thead th{text-align:left; font-size:11px; color:var(--text-dim); font-weight:700; letter-spacing:.03em; padding:11px 10px; background:var(--panel-2); border-bottom:1px solid var(--border); white-space:nowrap;}
   .hist-table thead th.num{text-align:right;}
-  .hist-table tbody td{padding:11px 16px; font-size:12.5px; font-family:var(--mono); border-bottom:1px solid var(--border); color:var(--text);}
+  .hist-table tbody td{padding:11px 10px; font-size:12px; font-family:var(--mono); border-bottom:1px solid var(--border); color:var(--text); white-space:nowrap;}
   .hist-table tbody tr:last-child td{border-bottom:none;}
   .hist-table tbody tr:hover{background:var(--panel-2);}
   .hist-table tbody td.num{text-align:right;}
@@ -247,17 +251,19 @@
     .factor .fbody .up-s, .factor .fbody .down-s{font-size:11px;}
 
     .c-list{max-height:none;}
+    .hist-table thead th{padding:8px 6px; font-size:9px;}
+    .hist-table tbody td{padding:8px 6px; font-size:10.5px;}
   }
 </style>
 </head>
-<body>
+<body style="background:#131722;">
 <div class="wrap">
 
   <div class="hdr">
     <div class="hdr-left">
       <div class="eyebrow">투자이꼴무협팀 · 제12회 GAPS ETF 투자대회</div>
       <h1>포트폴리오 대시보드</h1>
-      <div class="sub" id="asof">포트폴리오 기준 2026.07.20 19:09</div>
+      <div class="sub" id="asof">포트폴리오 기준 2026.07.28 18:46</div>
     </div>
     <div class="hdr-right">
       <div class="clock-card">
@@ -269,26 +275,28 @@
   </div>
 
   <div class="grid4">
-    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-11.70%</div><div class="foot">NAV 882,963,209원 · 전일대비 -2.74%</div></div>
+    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-14.81%</div><div class="foot">NAV 851,884,194원 · 전일대비 -5.28%</div></div>
     <div class="card"><div class="k">다음 이벤트</div><div class="v warn" id="nextEvtD">-</div><div class="foot" id="nextEvtTxt">-</div></div>
-    <div class="card"><div class="k">이번주 최대 변동성</div><div class="v" style="color:var(--danger)">7/16+7/20 -10%</div><div class="foot">제헌절 연휴 낀 2거래일(7/16,7/20) 합산 코스피 약 -10% — 실적 슈퍼위크(7/23 알파벳·테슬라 시작)도 대기중, 변동성 지속 전망</div></div>
-    <div class="card"><div class="k">ℹ 한도 체크(매입시점 기준)</div><div class="v" style="color:var(--sky)">전 카테고리 한도 내</div><div class="foot">국내섹터 14.76%, 해외섹터 9.95% — 급락으로 둘 다 한도(각 15%,10%) 여유 있게 안착</div></div>
+    <div class="card"><div class="k">이번주 최대 변동성</div><div class="v" style="color:var(--danger)">7/28 급락 -5.28%</div><div class="foot">中 반도체 자립 이슈(CXMT 상장+DUV 자체개발)로 매도사이드카+서킷브레이커 발동 — 국내 반도체 종목 하루만에 -11~15%</div></div>
+    <div class="card"><div class="k">ℹ 한도 체크(매입시점 기준)</div><div class="v" style="color:var(--sky)">전 카테고리 여유</div><div class="foot">급락으로 국내섹터 12.28%, 해외섹터 7.92%로 둘 다 한도 아래 — 현금 비중은 10.54%로 소폭 상승</div></div>
   </div>
 
   <div class="sec-title"><h2>일별 수익률 기록</h2><div class="line"></div></div>
+  <div class="hist-scroll">
   <table class="hist-table">
     <thead><tr><th>날짜</th><th class="num">NAV</th><th class="num">일간</th><th class="num">누적(시작자본 대비)</th></tr></thead>
     <tbody id="dailyHistBody"></tbody>
   </table>
+  </div>
 
   <div class="card" style="margin-bottom:22px;">
-    <div class="k">📊 이번주 시장 진단 (7/20 마감 반영)</div>
+    <div class="k">📊 이번주 시장 진단 (7/28 마감 반영)</div>
     <div class="foot" style="font-size:12.5px; line-height:1.7; margin-top:4px;">
-      · <b style="color:var(--down);">7/20 마감: 코스피 6,516.27(-304.33p,-4.46%), 코스닥 749.64(-42.20p,-5.33%)</b> — 제헌절 연휴(7/17~19) 이후 첫 거래일, 연휴 사이 쌓인 해외발 반도체 악재를 한꺼번에 반영. 개장 -2.60%(6643.58), 장중 -5.10%(6472.80)까지 밀렸다가 낙폭 일부 회복. 코스피 매도사이드카 2거래일 연속(7/16,7/20) 발동, 코스닥도 발동<br>
-      · <b style="color:var(--text);">원인</b>: 연휴 기간(7/16~17) SOX -5.85%(장중 저점기준 -9.71%), TSMC -7.29%, 日키옥시아 -16.10% — 글로벌 반도체주가 이틀간 급락한 여파가 국내 첫 거래일에 일괄 반영됨. 최근 2거래일(7/16,7/20) 합산 코스피 약 -10% 하락<br>
-      · <b style="color:var(--text);">종목</b>: 삼성전자 -4.31%(244,000원), SK하이닉스 -4.23%(1,764,000원), 현대차 -6.12%, LG에너지솔루션 -4.94%. 원/달러 1,478.4원(-0.1원, 보합)<br>
-      · <b style="color:var(--sky);">바닥론 vs 신중론</b>: NH투자증권 김병연 연구원 "반도체 피크아웃 논의는 아직 이르다, 코스피 6000선이 PBR 1.3~1.4배 적정 록바텀". 키움 한지영 연구원 "코스피 12개월 선행 PER 5.8배로 금융위기 포함 20년래 최저, 6000선 초중반이 지지력 테스트 구간" — 밸류에이션 매력은 인정하나 추가 조정 가능성도 병존<br>
-      · <b style="color:var(--warn);">⚠ 실적 캘린더 대폭 정정</b>: 기존에 넣어뒀던 테슬라(7/21)·MS·알파벳(7/28)·메타(7/29) 날짜가 부정확했음을 확인, 재검증해 수정함 — 알파벳·테슬라는 7/23(목) 새벽, MS·메타는 FOMC 결과와 같은 7/30(목) 새벽, 애플·아마존은 7/31(금) 새벽으로 정정(하단 캘린더 참고)
+      · <b style="color:var(--danger);">코스피 매도사이드카+서킷브레이커 동반 발동 — 장중 한때 -10%</b> — 간밤 美 반도체 약세(필라델피아반도체지수 -2.23%, 엔비디아 -4.99%, SK하이닉스ADR -7.47%)가 국내로 전이. 오전 9시6분 매도사이드카, 10시13분엔 20분간 전종목 거래정지되는 서킷브레이커까지 발동(올해 8번째)<br>
+      · <b style="color:var(--warn);">진짜 방아쇠는 중국발 구조적 위협</b>: 중국 메모리업체 창신메모리(CXMT)의 상하이증시 상장 흥행 + 중국의 반도체 露光장비(DUV) 자체개발 착수 소식이 겹치며, "중국이 한국 메모리 반도체를 추격한다"는 장기 경쟁 우려가 투자심리를 급랭시킴. 단순 단기 조정이 아니라 구조적 밸류에이션 재평가 성격<br>
+      · <b style="color:var(--text);">우리 포트폴리오</b>: NAV 899,340,574원 → 851,884,194원(전일대비 -5.28%). 국내 반도체 종목(KODEX AI반도체TOP2+ -14.76%, ACE글로벌반도체TOP4+ -10.38%, KODEX200 -11.20%)이 하루만에 급락 — 어제 재매수했던 포지션이 바로 다음날 큰 손실 구간에 진입<br>
+      · <b style="color:var(--text);">수급</b>: 개인 대규모 순매수로 방어, 외국인·기관은 순매도<br>
+      · <b style="color:var(--sky);">앞으로</b>: 이번주 SK하이닉스(7/29)·삼전·MS·메타(7/30) 실적에서 나올 가이던스가 이 중국발 우려를 진정시킬지가 관건 — 단기 반등 여부와 별개로 "중국 반도체 자립"이라는 새로운 구조적 리스크는 계속 추적 필요
     </div>
   </div>
 
@@ -302,7 +310,7 @@
     </div>
   </div>
 
-  <div class="sec-title"><h2>현재 실제 포트폴리오</h2><div class="line"></div><span class="hint">2026-07-15 16:26</span></div>
+  <div class="sec-title"><h2>현재 실제 포트폴리오</h2><div class="line"></div><span class="hint" id="portfolioAsofHint"></span></div>
   <div class="donut-row">
     <div class="donut-card">
       <div class="donut" id="donut"><div class="donut-center"><div class="ret" id="donutRet">-8.91%</div><div class="nav" id="donutNav">NAV 910,851,374원</div></div></div>
@@ -348,8 +356,8 @@
 /* ===================== 데이터 (여기만 매일 갱신) ===================== */
 const RANGE_START = "2026-07-10";
 const RANGE_END = "2026-08-31";
-const PORTFOLIO_ASOF = "2026.07.20 19:09";
-const NAV = 882963209;
+const PORTFOLIO_ASOF = "2026.07.28 18:46";
+const NAV = 851884194;
 const START_CAPITAL = 1000000000;
 
 // 카테고리별 색상 계열 (블루=국내지수, 인디고=국내섹터, 틸=해외지수, 마젠타=해외섹터, 앰버=국내채권, 오렌지=해외채권, 그레이=현금)
@@ -367,28 +375,33 @@ const dailyHistory = [
   {date:"2026-07-15", nav:943549084},
   {date:"2026-07-16", nav:907817839},
   {date:"2026-07-20", nav:882963209},
+  {date:"2026-07-21", nav:898044699},
+  {date:"2026-07-22", nav:898159529},
+  {date:"2026-07-23", nav:911834344},
+  {date:"2026-07-24", nav:899340574},
+  {date:"2026-07-28", nav:851884194},
 ];
 
 const categories = [
   {name:"국내주식_지수", cap:30, items:[
-    {name:"KODEX 200", amt:174046840, ret:-24.20, prevRet:-20.62},
-    {name:"KODEX 코스닥150", amt:34187710, ret:-31.68, prevRet:-26.42, light:true},
+    {name:"KODEX 200", amt:131266100, ret:-24.12, prevRet:-14.55},
+    {name:"KODEX 코스닥150", amt:32111795, ret:-35.83, prevRet:-29.84, light:true},
   ]},
   {name:"국내주식_섹터", cap:15, items:[
-    {name:"KODEX AI반도체TOP2플러스", amt:130366550, ret:-11.08, prevRet:-7.83},
+    {name:"KODEX AI반도체TOP2플러스", amt:104612365, ret:-19.95, prevRet:-6.09},
   ]},
   {name:"해외주식_지수", cap:30, items:[
-    {name:"TIGER 미국나스닥100", amt:109605600, ret:-8.60, prevRet:-5.55},
-    {name:"TIGER 미국S&P500", amt:76548905, ret:-4.38, prevRet:-2.65, light:true},
+    {name:"TIGER 미국나스닥100", amt:105218100, ret:-12.26, prevRet:-9.37},
+    {name:"TIGER 미국S&P500", amt:75043510, ret:-6.25, prevRet:-4.10, light:true},
   ]},
   {name:"해외주식_섹터", cap:10, items:[
-    {name:"TIGER 미국테크TOP10 INDXX", amt:44819500, ret:-10.39, prevRet:-6.70},
-    {name:"ACE 글로벌반도체TOP4 Plus", amt:43032390, ret:-13.89, prevRet:-9.57, light:true},
+    {name:"TIGER 미국테크TOP10 INDXX", amt:42613650, ret:-14.80, prevRet:-12.10},
+    {name:"ACE 글로벌반도체TOP4 Plus", amt:24883000, ret:-20.40, prevRet:-11.18, light:true},
   ]},
   {name:"FX 및 원자재", cap:20, items:[]},
-  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:150446790, ret:0.22, prevRet:0.23}]},
+  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:150547365, ret:0.29, prevRet:0.29}]},
   {name:"국내채권_회사채", cap:30, items:[]},
-  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:97194840, ret:-2.89, prevRet:-2.66}]},
+  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:95800050, ret:-4.28, prevRet:-3.88}]},
   {name:"해외채권_회사채", cap:30, items:[]},
   {name:"금리연계형/초단기채권", cap:50, items:[]},
 ];
@@ -416,6 +429,9 @@ const attendance = { // "YYYY-MM-DD": [참석자명...]
   "2026-07-15": ["하유찬","남영욱","임우진"],
   "2026-07-16": ["하유찬","남영욱"],
   "2026-07-20": ["하유찬","남영욱","임우진"],
+  "2026-07-21": ["하유찬"],
+  "2026-07-22": ["하유찬"],
+  "2026-07-23": ["하유찬"],
 };
 
 // 제출 체크리스트
@@ -433,72 +449,77 @@ const turnoverChecks = [
 
 // 시장 뉴스 아카이브 ("이번주 시장 진단"이 갱신될 때 빠지는 이전 내용을 여기 누적, 여기에 추가해서 매일 업데이트)
 const comments = [
-  {name:"7/14 - 코스피 조기반등, 정부 발표는 저PBR·코스닥 승강제 중심", text:"증권가 진단 갈림 \"6,500선 바닥론 vs AI 모멘텀이 분수령\" — 7/16 결과가 분수령이라 봤으나, 실제로는 7/14 장중 6,448.86까지 이미 터치 후 6,856.83으로 반등 마감. 정부 하반기 경제성장전략은 발표 전엔 \"성장률 2.0%→상향조정 예상\"으로 기대했으나, 실제 발표 내용은 성장률 수치보다 저PBR 기업 명단 공개·코스닥 승강제 같은 구조적 코리아디스카운트 해소책 중심이었음.", ts:"2026-07-14"},
-  {name:"7/14 - 성장전략 3.0%로 상향폭 확대, CPI 하회로 호재 확정", text:"하반기 경제성장전략을 \"저PBR 리스트·코스닥 승강제 중심의 구조적 정책\"으로 정리했었으나, 전문 자료 확인 결과 실제로는 성장률 2.0%→3.0% 대폭 상향 + 반도체 800조·AI데이터센터 550조 메가프로젝트 + MSCI 선진국지수 편입 추진까지 포함된 훨씬 공격적인 전략이었음. CPI도 실제 발표(MoM -0.4%, YoY 3.5%)가 예상을 전부 하회해 해당 요인은 '호재 실현'으로 확정.", ts:"2026-07-14"},
-  {name:"7/15 - 골드만 '6800 지지' 코멘트, 다음날 코스피 폭등 발판으로 확인", text:"7/14 마감 시점엔 코스피 6,856.83(+0.73%)로 완만한 반등에 그쳤고, 골드만삭스의 \"6,800선 지지\" 코멘트가 인상적이었음. 하지만 바로 다음날(7/15) 이 지지선이 진짜 발판이 되어 코스피가 하루 만에 +6.24%(7,284.41) 폭등 — 매수 사이드카까지 발동. 미-이란 갈등發 유가 급등(브렌트 80달러 근접)은 계속 진행 중이던 리스크였으나, CPI 호재와 SK하이닉스 ADR 급등이 이를 압도했음.", ts:"2026-07-15"},
-  {name:"7/15 - 코스피 +6.24%(7284.41) 반등 마감, CPI 둔화·SK하이닉스ADR 급등이 견인", text:"코스피 7,284.41(+6.24%), 코스닥 829.43(+5.80%) — 개장부터 급등, 양 시장 모두 장중 매수 사이드카 발동. 삼성전자 +6.27%(279,500원), SK하이닉스 +8.83%(2,082,000원), SK스퀘어 +16.13%. 반등 트리거: ①美 CPI 예상 하회로 긴축 우려 완화(나스닥+0.90%, 필라델피아반도체지수+2.54%) ②SK하이닉스 美ADR 하루 만에 +27.29% 급등 ③엔비디아·마이크론·인텔 등 美반도체 전반 강세 ④낙폭과대 인식에 외국인 2.3조·기관 1824억 순매수(개인은 2.47조 차익실현 매도). KB증권은 \"AI CAPEX 우려가 사라진 건 아니다\"라며 경계론 유지, 골드만삭스가 짚은 \"코스피 6,800선 지지선\"이 실제로 지켜지며 반등 발판이 됨. 하지만 바로 다음날(7/16) 이 반등분이 美 반도체 섹터 급락 여파로 대부분 반납됨.", ts:"2026-07-16"},
-  {name:"7/16 - 코스피 -6.37%(6820.60) 급락, 매도사이드카+금통위 긴축예고+TSMC 서프라이즈", text:"코스피 6,820.60(-463.81p,-6.37%), 코스닥 791.84(-4.53%) — 개장 -4.45% 출발, 장중 -7.60%(6730.87)까지 밀림. 코스피·코스닥 매도사이드카 동반 발동. 삼성전자 -8.77%, SK하이닉스 -11.53%. 원인: 간밤 美 SOX -2.08%(마이크론·샌디스크 급락)가 국내로 전이. 수급: 개인 3조6,606억 순매수 방어, 외국인·기관 순매도. 금통위 2.50%→2.75% 인상(만장일치), 통방문에 '추가 인상 기조' 명시(예상보다 매파적). TSMC는 매출·순이익·마진 전부 컨센서스 상회(순이익 7,065.6억대만달러) 확정했으나 한국장 마감후 발표라 당일 미반영. 레버리지ETF 보완방안 확정(예탁금 3천만원, 매매단위 20주, 괴리율 2%, 신규상장 잠정중단 — 상장폐지는 배제).", ts:"2026-07-17"},
-  {name:"7/17(현지시간 새벽 반영) - TSMC 서프라이즈에도 美반도체 2일연속 급락, AI고평가논란", text:"다우 -0.20%(52,552.97), S&P500 -0.51%(7,533.77), 나스닥 -1.47%(25,881.95). SOX -4.3% 추가 급락(전날 -2.08%에 이어 이틀 연속). TSMC 2분기 순이익 7,066억대만달러(전년비+77%, 컨센서스 대폭 상회)에도 '이미 반영됐다'는 차익실현 심리 확산 - SK하이닉스ADR -13.69%, 마이크론 -5.65%·샌디스크 -12.63%·엔비디아 -2.40%. 구글 AI모델(제미나이3.5프로) 출시 연기 소식에 알파벳 -4.4%, 골드만삭스 -5.1% - AI 고평가 논란이 반도체 넘어 빅테크 전반으로 확산. S&P500 내 반도체 비중이 3~4년전 8%→현재 20%대로 커진 쏠림 구조 자체가 리스크로 지목됨. 7/17은 제헌절 대체공휴일로 국내 증시 휴장이라 당일 반영은 안 됐고, 연휴 후 첫 거래일(7/20)로 이월됨.", ts:"2026-07-20"},
+  {name:"7/14 - 코스피 조기반등, 정부는 구조개혁 중심 발표", text:"6,500선 바닥론과 AI 모멘텀론이 갈리던 가운데, 장중 저점 터치 후 반등 마감. 정부 하반기 경제성장전략은 성장률 수치보다 저PBR·코스닥 승강제 등 구조적 코리아디스카운트 해소책이 중심이었음.", ts:"2026-07-14"},
+  {name:"7/14 - 성장전략 상향폭 더 컸고, CPI도 호재로 확정", text:"하반기 경제성장전략을 구조적 정책 중심으로만 봤으나, 실제로는 성장률 대폭 상향 + 반도체·AI데이터센터 메가프로젝트까지 포함된 더 공격적인 전략이었음. CPI도 예상을 하회해 호재로 확정.", ts:"2026-07-14"},
+  {name:"7/15 - '6800 지지' 코멘트가 다음날 폭등 발판이 됨", text:"완만한 반등에 그쳤던 날, 증권가의 코스피 지지선 코멘트가 인상적이었는데 바로 다음날 그 지지선이 실제 반등 발판으로 확인됨.", ts:"2026-07-15"},
+  {name:"7/15 - 코스피 급등 마감, 인플레 둔화·반도체 강세가 견인", text:"CPI 예상 하회로 긴축 우려 완화, 미국 반도체 전반 강세, 낙폭과대 인식에 외국인 순매수 유입까지 겹치며 큰 폭 반등. 다만 다음날 이 반등분이 반도체 섹터 급락 여파로 대부분 반납됨.", ts:"2026-07-16"},
+  {name:"7/16 - 코스피 급락, 매도사이드카+긴축예고+TSMC 서프라이즈", text:"간밤 미국 반도체 섹터 약세가 국내로 전이되며 급락, 매도사이드카 발동. 금통위는 인상과 함께 추가 긴축 기조를 명시해 예상보다 매파적. TSMC는 컨센서스를 상회했으나 발표 시점상 당일엔 반영되지 못함.", ts:"2026-07-17"},
+  {name:"7/17(현지시간 반영) - TSMC 호실적에도 美 반도체 2일 연속 급락", text:"어닝서프라이즈에도 '이미 반영됐다'는 차익실현 심리로 반도체 섹터가 이틀 연속 하락. AI 모델 출시 지연 소식까지 겹치며 고평가 논란이 반도체를 넘어 빅테크 전반으로 확산. 국내는 제헌절 연휴로 휴장이라 반영이 다음 거래일로 이월됨.", ts:"2026-07-20"},
+  {name:"7/20 - 코스피 급락, 연휴중 해외 반도체 악재 일괄 반영", text:"제헌절 연휴 이후 첫 거래일, 연휴 사이 쌓인 해외발 반도체 악재를 한꺼번에 반영하며 급락. 장중 낙폭을 일부 회복하며 마감, 매도사이드카 2거래일 연속 발동. 최근 2거래일 합산 코스피 약 -10%.", ts:"2026-07-21"},
+  {name:"7/21 - 코스피 급반등, 삼전·하이닉스 저가매수 유입", text:"낙폭과대 인식에 반등 성공, 2거래일 급락 후 첫 반등일. 다만 포트폴리오 전체로는 완만한 개선 수준(+1.71%)에 그쳐, 삼전·하이닉스 쏠림 종목 위주의 반등이었음.", ts:"2026-07-22"},
+  {name:"7/22 - 코스피 장중 사이드카 급등 후 종가 보합", text:"간밤 美 반도체 급등(SOX+5.21%) 여파로 개장 +4.51%, 매수사이드카 발동해 한때 +6.08%까지 치솟았으나 오후 들어 상승분 대부분 반납. 국내 반도체 종목은 오히려 소폭 하락 마감, 미국 지수 추종 종목은 전일 미장 상승분 반영되며 소폭 개선 — 장중 급등이 종가까지 못 버틴 하루였음.", ts:"2026-07-23"},
+  {name:"7/23 - 국내 반도체 반등, 일부 매도로 리밸런싱 실행", text:"국내 반도체 종목(KODEX200·AI반도체TOP2+·ACE글로벌반도체TOP4+) 강세 지속. 반등 구간을 활용해 세 종목 일부 매도, 현금 21.7%까지 확보하며 한도 여유 회복. 반면 미국 지수 추종 종목은 알파벳·테슬라 실적 후 시간외 약세가 반영되며 소폭 하락.", ts:"2026-07-24"},
+  {name:"7/24 - 매도했던 반도체 종목 재매수, 당일은 하락", text:"전날 매도했던 KODEX200·AI반도체TOP2+에 다시 재진입(각각 +500주·+1,400주), 하락한 가격대에 물타기 성격으로 들어감. 평균단가는 낮아졌으나 당일 가격 자체는 하락 마감. 현금 비중은 21.7%→9.98%로 축소.", ts:"2026-07-28"},
 ];
 
 const events = [
-  {date:"2026-07-14", time:"CPI 21:30 / 성장전략 시간미정(오전 국무회의 통상)", short:"CPI", label:"美 6월 CPI + 정부 하반기 경제성장전략(국무회의)", level:"mid", meta:"성장률 전망 상향조정 예상(반도체 슈퍼사이클 반영), 6월 고용지표도 함께 발표", factors:[
-    {name:"CPI 발표(실제: MoM -0.4%, 근원MoM 0.0%, YoY 3.5% — 예상(-0.1%/0.2%/3.8%) 전부 하회)", asset:"전종목", up:"예상 부합·하회 → 안도 랠리, 위험자산 전반 +1~2%", down:"서프라이즈 상회 → Fed 매파 강화 우려, 나스닥100·반도체 -2~4%", outcome:"up"},
-    {name:"하반기 경제성장전략(실제: 성장률 2.0%→3.0% 상향, 반도체 800조·AI데이터센터 550조 메가프로젝트, MSCI 선진국지수 편입 추진)", asset:"KODEX200(간접)", up:"반도체 슈퍼사이클 반영 상향폭 예상보다 커 → 심리 개선", down:"고환율·고금리 대응책이 시장 기대에 못 미침 → 영향 제한적", outcome:"up"},
+  {date:"2026-07-14", time:"CPI 21:30(KST)", short:"CPI", label:"美 6월 CPI + 하반기 경제성장전략", level:"mid", meta:"성장률 전망 상향 예상, 고용지표 동시 발표", factors:[
+    {name:"CPI 발표", asset:"전종목", up:"예상 부합·하회 → 안도 랠리", down:"서프라이즈 상회 → 매파 우려, 위험자산 조정", outcome:"up"},
+    {name:"하반기 경제성장전략", asset:"KODEX200(간접)", up:"반도체 슈퍼사이클 반영, 상향폭 확대 → 심리 개선", down:"시장 기대 못 미침 → 영향 제한적", outcome:"up"},
   ]},
-  {date:"2026-07-15", time:"업무보고 시간미정 / ASML 유럽 개장전(현지 오전) → 한국시간 오후2시경(추정) / PPI 21:30(오전8:30 ET)", short:"ASML·PPI", label:"금융위 대통령 업무보고 + ASML 2분기 실적 + 美 6월 PPI", level:"high", meta:"단일종목 레버리지ETF 보완대책 발표 가능성 / ASML 컨센서스 매출 $10.28~10.45B, 실적후 옵션시장 ±8.36% 변동 반영 / PPI는 CPI의 선행지표, BLS 공식 발표일정 기준 7/15 21:30 확정", factors:[
-    {name:"레버리지ETF 규제안 발표 여부(실제: 대통령 7/15 업무보고서 '신속 마련' 지시만, 구체안은 7/16 F4회의로 연기)", asset:"KODEX200·AI반도체TOP2+ (수급 안정성)", up:"레버리지 배수조정·회전율제한 등 현실적 대책 → 초단타 변동성 완화, 중기적으로 시장 안정에 긍정적", down:"상장폐지 등 파격 조치 또는 발표 지연 → 불확실성 지속, 단기 변동성 확대", outcome:"mixed"},
-    {name:"국민연금 리밸런싱 진행상황", asset:"KODEX200", up:"TAA 최대활용으로 매도규모 14~21조원까지 축소 관측", down:"SAA만 활용 시 51~57조원 매도 필요 — 7월 내내(약 20거래일) 분산집행되며 지속 압박", outcome:null},
-    {name:"ASML 가이던스·수주 톤(실제: 매출 93.26억유로로 컨센서스(88억) 상회, 연간가이던스 360~400억→430~450억유로 대폭 상향, 메모리 매출 +75%YoY 전망)", asset:"ACE 글로벌반도체TOP4 Plus (TSMC 7/16 실적 프리뷰 성격)", up:"가이던스 상회+AI/EUV 수요 견조 확인 → +4~6%, 익일 TSMC 기대감도 동반 상승", down:"가이던스 부진 또는 중국 수출규제 우려 재부각 → -6~9%, 반도체 장비주 전반 조정, TSMC 실적 경계감 확대", outcome:"up"},
-    {name:"美 6월 PPI(실제: 전월대비 -0.3%로 시장예상치(0.0%) 하회 — 7/14 CPI에 이어 2연속 비둘기적 지표, 인플레 둔화 신호 재확인)", asset:"전종목(간접, 금리기대 경로)", up:"예상 하회 → 금리인하 기대 강화, 위험자산 전반 안도 지속", down:"예상 상회 → Fed 매파 기대 재부각, 위험자산 조정 압력", outcome:"up"},
+  {date:"2026-07-15", time:"PPI 21:30 · ASML 실적 오후", short:"ASML·PPI", label:"ASML 실적 + 美 6월 PPI + 레버리지ETF 대책 예고", level:"high", meta:"인플레 지표 연속 발표 구간", factors:[
+    {name:"레버리지ETF 규제 발표 여부", asset:"KODEX200·AI반도체TOP2+", up:"현실적 수준 대책 → 변동성 완화", down:"파격 조치·발표 지연 → 불확실성 지속", outcome:"mixed"},
+    {name:"국민연금 리밸런싱 진행상황", asset:"KODEX200", up:"매도규모 축소 관측", down:"7월 내내 분산매도 지속 압박", outcome:null},
+    {name:"ASML 가이던스", asset:"ACE 글로벌반도체TOP4+", up:"AI/EUV 수요 견조 → 밸류체인 전반 훈풍", down:"수요 부진·수출규제 우려 → 장비주 조정", outcome:"up"},
+    {name:"美 6월 PPI", asset:"전종목(간접)", up:"예상 하회 → 금리인하 기대 강화", down:"예상 상회 → 매파 기대 재부각", outcome:"up"},
   ]},
-  {date:"2026-07-16", time:"금통위 09:00~09:50(발표완료) / TSMC 15:00(대만14:00, 발표완료) / F4회의 레버리지ETF 보완방안(발표완료) / 코스피 마감 15:30", short:"금통위·TSMC", label:"코스피 -6.37% 급락(매도사이드카) + 금통위 기준금리 인상 + TSMC 어닝서프라이즈 + 레버리지ETF 보완방안 확정", level:"high", meta:"코스피 6,820.60(-463.81p, -6.37%, 장중 -7.60%인 6,730.87까지 하락), 코스닥 791.84(-4.53%). 매도사이드카 코스피·코스닥 동반 발동(코스피 올해 19번째). 외국인 1조3,771억·기관 2조3,681억 순매도, 개인 3조6,606억 순매수. 원/달러 1,480.4원(-4.3원)", factors:[
-    {name:"美 반도체 섹터 간밤 급락 여파(실제: SOX -2.08%, 마이크론·샌디스크 등 메모리주 급락 - 차익실현+SK하이닉스ADR발 공급증설 경쟁우려+코어위브 메모리가격 헤지 검토·中 CXMT 증설 소식 겹침. 반면 PPI 둔화로 애플+4.16%·아마존+3%·MS+2.78%·알파벳+3.17% 등 반도체 제외 빅테크와 금융섹터는 강세 - 반도체→금융/비반도체 로테이션)", asset:"KODEX200·AI반도체TOP2+·ACE글로벌반도체TOP4+", up:"-", down:"삼성전자 -8.77%, SK하이닉스 -11.53%, SK스퀘어 -12.30% 마감 - 반도체 쏠림 구조상 낙폭 확대(장중엔 SK하이닉스 -15%대까지)", outcome:"down"},
-    {name:"금리 결정(실제: 2.50%→2.75%, 0.25%p 인상, 위원 7명 만장일치 - 시장 컨센서스와 정확히 부합, 3년6개월만의 인상)", asset:"KODEX200·AI반도체TOP2+", up:"-", down:"예상대로 인상 → 서프라이즈 없이 이미 선반영. 신현송 총재는 간담회에서 '기준금리가 주가를 100% 좌우한다고 보지 않는다' 언급 - 그 자체로는 오늘 급락의 주된 원인이 아니라는 신호", outcome:"down"},
-    {name:"통화정책방향 코멘트(실제: 통방문에 '향후 추가 금리 인상 기조를 이어갈 것' 명시, 만장일치 결정 - 애초 예상보다 뚜렷한 매파 시그널. 근거로 물가상승률 3%대, 반도체發 고성장, 가계부채 확대·수도권 집값 상승을 지목. 정부가 14일 제시한 성장률 전망치 3.0%(한은 5월전망 2.6%보다 +0.4%p)도 긴축 여력 뒷받침)", asset:"KODEX200", up:"-", down:"'긴축 이어간다' 명시적 예고 → 8월 추가인상 우려 부각, 당초 예상보다 매파적", outcome:"down"},
-    {name:"TSMC 2분기 실적(실제: 매출 1조2,700억 대만달러·순이익 7,065.6억 대만달러로 컨센서스(매출1조2,640억·순이익6,326.4억) 상회, 매출총이익률 67.7%(예상 67.1%)도 상회, 순이익 5분기 연속 사상최대, 7나노 이하 첨단공정이 매출의 77% 차지, 대만증시서 TSMC 주가 +1.23% 마감)", asset:"ACE 글로벌반도체TOP4 Plus·TIGER 미국나스닥100", up:"가이던스 상회+AI수요 재확인 → 컨센서스 전반 상회로 확정. 단, 후속으로 확인된 7/16(현지시간) 美장 반응: '이미 반영됐다'는 차익실현 심리로 SOX -4.3% 추가 급락 - 실적 호재가 주가로 연결되지 않는 흐름(상세는 7/17 이벤트 참고)", down:"-", outcome:"up"},
-    {name:"레버리지ETF 보완방안(실제: 16일 F4회의(구윤철 경제부총리 주재)에서 금융위·금감원·거래소 공동 발표 확정 — ①기본예탁금 1천만원→3천만원 상향(8월 시행) ②매매단위 1주→20주로 확대(11월 시행, 거래량 감소 유도) ③괴리율 관리기준 3%→2% 강화, 위반운용사 신규ETF 상장제한 검토 ④교육시간 2시간→3시간 ⑤신규 단일종목 레버리지 상품 상장 잠정중단 ⑥기존 상품 광고·마케팅 금지 — 상장폐지·거래정지 등 강제조치는 최종 배제)", asset:"KODEX200·AI반도체TOP2+ (수급 안정성)", up:"-", down:"-", outcome:"mixed"},
+  {date:"2026-07-16", time:"금통위 09:00 · TSMC 15:00 · F4회의", short:"금통위·TSMC", label:"코스피 급락 + 금통위 인상 + TSMC 실적 + 레버리지ETF 대책 확정", level:"high", meta:"매도사이드카 발동, 낙폭 확대 국면 진입", factors:[
+    {name:"美 반도체 섹터 간밤 급락 여파", asset:"KODEX200·AI반도체TOP2+·ACE글로벌반도체TOP4+", up:"-", down:"반도체 쏠림 구조상 낙폭 확대, 금융·비반도체로 순환매", outcome:"down"},
+    {name:"금통위 금리 결정", asset:"KODEX200·AI반도체TOP2+", up:"-", down:"예상대로 인상 → 이미 선반영, 충격은 제한적", outcome:"down"},
+    {name:"통화정책 방향", asset:"KODEX200", up:"-", down:"긴축 기조 명시 → 예상보다 매파적", outcome:"down"},
+    {name:"TSMC 2분기 실적", asset:"ACE글로벌반도체TOP4+·TIGER나스닥100", up:"컨센서스 대폭 상회로 확정 → 다만 반등으로 못 이어짐", down:"-", outcome:"up"},
+    {name:"레버리지ETF 보완방안", asset:"KODEX200·AI반도체TOP2+", up:"-", down:"진입장벽 강화 위주, 상장폐지는 배제", outcome:"mixed"},
   ]},
-  {date:"2026-07-17", time:"제헌절 대체공휴일 - 국내 증시 휴장 / 美장은 7/16 마감분 기준", short:"美반도체(휴장)", label:"[국내 휴장] TSMC 서프라이즈에도 美 반도체 섹터 급락 지속 - AI 고평가 논란 재점화", level:"high", meta:"7/17은 제헌절 대체공휴일로 국내 증시 휴장. 美 다우 -0.20%(52,552.97)·S&P500 -0.51%(7,533.77)·나스닥 -1.47%(25,881.95, 7/16 기준). 연휴 사이(7/16~17) SOX -5.85%(장중 저점기준 -9.71%), TSMC 7/17 -7.29%, 일본 키옥시아 7/17 -16.10% — 국내 반영은 연휴 후 첫 거래일인 7/20으로 이월", factors:[
-    {name:"TSMC 어닝서프라이즈(순이익 전년비+77%, 컨센서스 대폭 상회)에도 반도체 섹터 차익실현 매물 확산 - '호실적이 이미 주가에 반영됐다'는 인식 + S&P500 내 반도체 비중이 3~4년전 8%→현재 20%대로 커진 쏠림 구조 자체가 리스크로 지목됨(머피앤드실베스트 폴 놀트 전략가)", asset:"KODEX AI반도체TOP2+·ACE글로벌반도체TOP4+ (국내 반도체주 재차 하방압력 우려)", up:"낙폭과대 인식에 저가매수 유입 시 반등 가능", down:"연휴 기간 쌓인 해외 매도세가 연휴 후 첫 거래일(7/20)에 한꺼번에 반영 → 실제로 7/20 코스피 -4.46% 추가 급락으로 실현(하단 7/20 이벤트 참고)", outcome:"down"},
-    {name:"알파벳 AI모델 출시 연기 소식 - AI 투자 수익성·속도에 대한 불확실성이 반도체 넘어 빅테크 전반으로 확산", asset:"TIGER 미국나스닥100·TIGER 미국테크TOP10", up:"-", down:"AI 밸류체인 전반 투자심리 위축 - 나스닥100·테크TOP10에도 부담", outcome:"down"},
+  {date:"2026-07-17", time:"제헌절 대체공휴일 - 국내 휴장", short:"美반도체(휴장)", label:"국내 휴장 중 美 반도체 2일 연속 급락, AI 고평가 논란", level:"high", meta:"연휴 사이 해외 악재, 반영은 다음 거래일로 이월", factors:[
+    {name:"반도체 차익실현 확산", asset:"AI반도체TOP2+·ACE글로벌반도체TOP4+", up:"낙폭과대 인식에 저가매수 유입 가능", down:"다음 거래일 한꺼번에 반영 → 실제로 추가급락 실현", outcome:"down"},
+    {name:"AI 모델 지연 소식", asset:"TIGER나스닥100·TIGER테크TOP10", up:"-", down:"AI 밸류체인 전반 투자심리 위축", outcome:"down"},
   ]},
-  {date:"2026-07-20", time:"제헌절 연휴 이후 첫 거래일 - 코스피 마감 15:30", short:"코스피 -4.46%", label:"코스피 -4.46%(6516.27) 급락 - 연휴 기간 해외 반도체 악재 한꺼번에 반영, 2거래일 연속 매도사이드카", level:"high", meta:"코스피 6,516.27(-304.33p,-4.46%), 코스닥 749.64(-42.20p,-5.33%). 개장 -2.60%(6643.58), 장중 -5.10%(6472.80)까지. 코스피 매도사이드카 2거래일 연속(7/16,7/20) 발동. 삼성전자 -4.31%(244,000원), SK하이닉스 -4.23%(1,764,000원), 현대차 -6.12%. 원/달러 1,478.4원(-0.1원). 종가기준 6500선은 4/30(6598.87) 이후 약 두달만", factors:[
-    {name:"제헌절 연휴(7/17~19) 사이 쌓인 美·日·대만 반도체 급락분 일괄 반영(SOX 7/16~17 이틀간 -5.85%, TSMC -7.29%, 키옥시아 -16.10%)", asset:"KODEX200·KODEX AI반도체TOP2+·ACE글로벌반도체TOP4+", up:"-", down:"삼성전자·SK하이닉스 동반 약세로 지수 하방 주도 - 다만 장중 6472.80 저점 이후 낙폭 일부 회복(저가매수 유입)", outcome:"down"},
-    {name:"밸류에이션 바닥 논쟁 - NH투자증권 김병연 연구원: '반도체 피크아웃 논의는 아직 이르다, 코스피 6000선이 PBR 1.3~1.4배 적정 록바텀'. 키움 한지영 연구원: '코스피 12개월 선행 PER 5.8배로 금융위기 포함 20년래 최저, 6000선 초중반이 지지력 테스트 구간'", asset:"KODEX200·KODEX AI반도체TOP2+", up:"밸류에이션 매력에 저가매수 유입 지속 시 6500선 지지 가능성", down:"추가 조정 시 6000선까지 열어둬야 한다는 신중론도 병존", outcome:"mixed"},
+  {date:"2026-07-20", time:"연휴 후 첫 거래일 - 마감 15:30", short:"코스피 -4.46%", label:"코스피 급락, 2거래일 연속 매도사이드카", level:"high", meta:"연휴 기간 해외 악재 일괄 반영, 낙폭 일부 회복 마감", factors:[
+    {name:"연휴기간 해외 반도체 급락분 반영", asset:"KODEX200·AI반도체TOP2+·ACE글로벌반도체TOP4+", up:"-", down:"대형 반도체주 동반 약세로 지수 하방 주도, 저점 이후 낙폭 일부 회복", outcome:"down"},
+    {name:"밸류에이션 바닥론 vs 신중론", asset:"KODEX200·AI반도체TOP2+", up:"밸류에이션 매력에 저가매수 유입 시 지지", down:"추가 조정 가능성도 병존", outcome:"mixed"},
   ]},
-  {date:"2026-07-23", time:"부동산토론회 시간미정(국내) / 알파벳·테슬라 美 현지 7/22(수) 장마감후 → 한국시간 7/23(목) 05~06시경", short:"알파벳·테슬라", label:"알파벳·테슬라 2분기 실적(빅테크 실적시즌 개막) + 부동산 대토론회(대통령 주재)", level:"high", meta:"⚠ 기존에 7/21로 넣어뒀던 테슬라 단독 일정 정정 - 실제로는 알파벳과 같은 날(美 7/22 수요일) 발표이며 한국시간 7/23 새벽 도착. 알파벳: 제미나이3.5프로 출시 지연 소식이 부담 요인, 클라우드 매출총이익률·AI매출전환이 관전포인트 / 마이크로소프트·메타는 7/30(목), 애플·아마존은 7/31(금)로 별도", factors:[
-    {name:"알파벳 클라우드·AI 수익화(제미나이3.5프로 출시 지연 소식이 사전 부담 요인)", asset:"TIGER 미국나스닥100", up:"클라우드 매출총이익률 개선+AI매출전환 확인 → +2~4%", down:"모델 지연 우려 현실화+캐펙스 부담 부각 → -3~5%", outcome:null},
-    {name:"테슬라 자동차 마진·로보틱스(Optimus) 진행상황", asset:"TIGER 미국테크TOP10 INDXX", up:"마진 개선 지속+AI/로보틱스 모멘텀 확인 → +3~5%", down:"수요 둔화 우려 재부각 → -4~7%", outcome:null},
-    {name:"부동산 세제·공급대책 방향", asset:"금융/은행 관련주(간접)", up:"시장 예상보다 완화적 → 금융주 안도", down:"규제 강화 시사 → 관련주 단기 조정", outcome:null},
+  {date:"2026-07-23", time:"美 현지 7/22(수) 장마감 후 → 한국시간 새벽", short:"알파벳·테슬라", label:"빅테크 실적시즌 개막(알파벳·테슬라) + 부동산 대토론회", level:"high", meta:"실적 슈퍼위크 시작 — MS·메타 7/30, 애플·아마존 7/31", factors:[
+    {name:"알파벳 클라우드·AI 수익화", asset:"TIGER나스닥100", up:"매출총이익률 개선+AI매출전환 확인 → 상승", down:"AI모델 지연 우려 현실화+캐펙스 부담 → 하락", outcome:null},
+    {name:"테슬라 마진·로보틱스", asset:"TIGER테크TOP10", up:"마진 개선+AI모멘텀 확인 → 상승", down:"수요 둔화 우려 재부각 → 하락", outcome:null},
+    {name:"부동산 세제·공급대책", asset:"금융주(간접)", up:"예상보다 완화적 → 안도", down:"규제 강화 시사 → 단기 조정", outcome:null},
   ]},
-  {date:"2026-07-29", time:"SK하이닉스 콘퍼런스콜(국내, 시간미정) / FOMC 이틀째(비공개, 결과는 익일)", short:"SK하이닉스", label:"SK하이닉스 2분기 실적 (FOMC 이틀째 - 결과는 익일 새벽)", level:"high", meta:"SK하이닉스 컨센서스: 매출 약83.6조원, EPS 약68,565원. HBM·DRAM 수급이 핵심 변수. FOMC는 이틀째로 비공개 진행, 정책성명은 회의 마지막날(美 7/29 수요일) 발표 → 한국시간 7/30 새벽 도착(하단 참고)", factors:[
-    {name:"SK하이닉스 실적(컨센서스 매출 83.6조·EPS 68,565원)", asset:"KODEX AI반도체TOP2+", up:"컨센서스 상회(마이크론 감안 시 유력) → +5~10%", down:"쇼크 → -8~15%", outcome:null},
+  {date:"2026-07-29", time:"국내 콘퍼런스콜", short:"SK하이닉스", label:"SK하이닉스 2분기 실적", level:"high", meta:"HBM·DRAM 수급이 핵심 변수, FOMC 결과는 익일 새벽", factors:[
+    {name:"SK하이닉스 실적", asset:"AI반도체TOP2+", up:"컨센서스 상회 → 큰 폭 반등", down:"쇼크 → 큰 폭 하락", outcome:null},
   ]},
-  {date:"2026-07-30", time:"FOMC 결과 한국시간 03:00 / 삼성전자 컨퍼런스콜 오전 10:00(한국) / 마이크로소프트·메타 美 현지 7/29(수) 장마감후 → 한국시간 익일(7/30) 05~06시경", short:"FOMC·삼전", label:"FOMC 결과 + 삼성전자 2분기 확정실적 + 마이크로소프트·메타 실적", level:"high", meta:"⚠ 기존 캘린더에서 메타(7/29)·MS(7/28) 날짜 정정 - 실제로는 둘 다 美 7/29(수) 발표, 한국시간 7/30 새벽 도착으로 FOMC 결과와 겹침. 삼성전자: 2분기 잠정실적(7/7 발표) 매출171조·영업이익89.4조로 전기대비+56.21% 서프라이즈, 확정실적 컨콜에서 DS(반도체) 부문 분해·HBM 비중 공개 예정", factors:[
-    {name:"FOMC 결과(7/28~29 회의, 현재 기준금리 3.50~3.75% 유지 중)", asset:"전종목", up:"동결+비둘기 코멘트 → +2~4%", down:"매파 코멘트·깜짝인상 → -3~6%", outcome:null},
-    {name:"삼성전자 HBM/메모리 가이던스(잠정실적은 이미 서프라이즈 확정, 관건은 DS부문 분해와 하반기 가이던스)", asset:"KODEX200·AI반도체TOP2+", up:"HBM 비중 50%+ 확인, 하반기 가이던스 추가 상향 → +4~7% 반등 촉매", down:"성과급충당금 반영에 따른 눈높이 조정 또는 하반기 가이던스 보수적 → -5~8%(7/7 잠정실적 발표 때처럼 '서프라이즈에도 셀온' 반복 가능성 유의)", outcome:null},
-    {name:"MS 클라우드(Azure) 성장률", asset:"TIGER 미국나스닥100", up:"가속 확인 → +2~3%", down:"둔화 → -2~3%", outcome:null},
-    {name:"메타 실적·캐펙스(빅4 합산 연간 설비투자 최대 7250억달러 전망, 2027년 9000억달러 근접 가능성)", asset:"TIGER 미국나스닥100", up:"매출전환 확인 → +2~3%", down:"캐펙스 부담 부각 → -3~5%", outcome:null},
+  {date:"2026-07-30", time:"FOMC결과 03:00 · 삼전 콜 10:00 · MS·메타 새벽", short:"FOMC·삼전", label:"FOMC 결과 + 삼성전자 확정실적 + MS·메타 실적", level:"high", meta:"이벤트 3건 겹치는 최대 변동성 구간", factors:[
+    {name:"FOMC 결과", asset:"전종목", up:"동결+비둘기 코멘트 → 상승", down:"매파 코멘트·깜짝인상 → 하락", outcome:null},
+    {name:"삼성전자 HBM·메모리 가이던스", asset:"KODEX200·AI반도체TOP2+", up:"HBM 비중 확대 확인, 가이던스 상향 → 반등 촉매", down:"가이던스 보수적 → 셀온 재현 우려", outcome:null},
+    {name:"MS 클라우드 성장률", asset:"TIGER나스닥100", up:"가속 확인 → 상승", down:"둔화 → 하락", outcome:null},
+    {name:"메타 실적·캐펙스", asset:"TIGER나스닥100", up:"매출전환 확인 → 상승", down:"캐펙스 부담 부각 → 하락", outcome:null},
   ]},
-  {date:"2026-07-31", time:"애플·아마존 美 현지 7/30(목) 장마감후 → 한국시간 7/31(금) 05~06시경", short:"애플+아마존", label:"애플 3분기(FY26 Q3) 실적 + 아마존 실적", level:"high", meta:"⚠ 기존 7/30 캘린더에서 정정 - 애플·아마존은 삼성전자와 다른 날(하루 뒤). 애플: 팀 쿡 CEO 마지막 실적발표(10월부터 존 터너스 신임CEO), TIGER 미국테크TOP10 내 비중 18.17%(1위)", factors:[
-    {name:"AWS 성장률", asset:"TIGER 미국나스닥100", up:"가속 확인 → +1~2%", down:"부진 → -2~3%", outcome:null},
-    {name:"애플 아이폰 공급·가격인상 영향(6/25 가격인상, 이번 분기엔 미반영)", asset:"TIGER 미국테크TOP10 INDXX(비중 1위 18.17%)·TIGER 미국나스닥100", up:"공급 정상화+견조한 수요 확인 → +3~5%", down:"맥/맥북네오 공급부족 지속 또는 CEO 교체 불확실성 부각 → -3~6%", outcome:null},
+  {date:"2026-07-31", time:"美 현지 7/30(목) 장마감 후 → 한국시간 새벽", short:"애플+아마존", label:"애플·아마존 실적", level:"high", meta:"실적 슈퍼위크 마지막 관문", factors:[
+    {name:"AWS 성장률", asset:"TIGER나스닥100", up:"가속 확인 → 상승", down:"부진 → 하락", outcome:null},
+    {name:"애플 아이폰 공급·수요", asset:"TIGER테크TOP10·TIGER나스닥100", up:"공급 정상화+견조한 수요 확인 → 상승", down:"공급부족 지속·경영진 교체 불확실성 → 하락", outcome:null},
   ]},
-  {date:"2026-08-04", time:"美 장마감 후 → 한국시간 익일(8/5) 05~06시경", short:"AMD", label:"AMD 2분기 실적", level:"mid", meta:"컨센서스 매출 $10.51B / ACE 글로벌반도체TOP4 Plus 비중 5.07%, TIGER 미국테크TOP10 비중 3.47%", factors:[
-    {name:"데이터센터 GPU/MI 시리즈 성장세", asset:"ACE 글로벌반도체TOP4 Plus·TIGER 미국테크TOP10", up:"가이던스 상회(전분기 +46% 성장 가이던스 기반) → +5~8%", down:"엔비디아 대비 성장 둔화 신호 → -5~8%", outcome:null},
+  {date:"2026-08-04", time:"美 장마감 후 → 한국시간 새벽", short:"AMD", label:"AMD 2분기 실적", level:"mid", meta:"", factors:[
+    {name:"데이터센터 GPU 성장세", asset:"ACE글로벌반도체TOP4+·TIGER테크TOP10", up:"가이던스 상회 → 상승", down:"엔비디아 대비 둔화 신호 → 하락", outcome:null},
   ]},
-  {date:"2026-08-13", time:"21:30(서머타임 KST 기준, 현지 오전 8:30 ET)", short:"PPI", label:"美 7월 PPI(생산자물가지수)", level:"mid", meta:"BLS 공식 발표일정 기준 확정일 / CPI(8/12 예정)의 선행지표 — 직전 6월 PPI는 전월대비 -0.3%(예상 하회)로 인플레 둔화 신호", factors:[
-    {name:"7월 PPI 전월대비", asset:"전종목(간접, 금리기대 경로)", up:"예상 부합·하회 → 인플레둔화 흐름 지속 확인, 8/27 금통위②·8/28 잭슨홀 앞두고 위험자산 우호적", down:"예상 상회 → 인플레 재점화 우려, Fed/한은 매파 기대 강화", outcome:null},
+  {date:"2026-08-13", time:"21:30(KST)", short:"PPI", label:"美 7월 PPI", level:"mid", meta:"CPI(8/12)의 선행지표", factors:[
+    {name:"PPI 전월대비", asset:"전종목(간접)", up:"예상 부합·하회 → 인플레둔화 지속 확인", down:"예상 상회 → 인플레 재점화 우려", outcome:null},
   ]},
-  {date:"2026-08-25", time:"美 장마감 후 → 한국시간 익일(8/26) 05~06시경", short:"엔비디아", label:"엔비디아 실적", level:"high", meta:"", factors:[
-    {name:"데이터센터 GPU 매출", asset:"나스닥100·글로벌반도체", up:"서프라이즈 → +5~8%, AI버블 논쟁 진정", down:"가이던스 실망 → -8~15%(6/3 브로드컴 사태 재현 리스크)", outcome:null},
+  {date:"2026-08-25", time:"美 장마감 후 → 한국시간 새벽", short:"엔비디아", label:"엔비디아 실적", level:"high", meta:"", factors:[
+    {name:"데이터센터 GPU 매출", asset:"나스닥100·글로벌반도체", up:"서프라이즈 → AI버블 논쟁 진정", down:"가이던스 실망 → 큰 폭 하락 리스크", outcome:null},
   ]},
-  {date:"2026-08-27", time:"금통위 09:00경(잠정)·총재간담회 11:20경", short:"금통위②", label:"한국은행 금통위 2차", level:"high", meta:"2차 인상 예상", factors:[
-    {name:"2차 인상 여부", asset:"KODEX200", up:"인상 없이 종료 → +3~4% 안도랠리", down:"예상대로 인상+추가시사 → -2~4%", outcome:null},
+  {date:"2026-08-27", time:"09:00경", short:"금통위②", label:"한국은행 금통위 2차", level:"high", meta:"2차 인상 예상", factors:[
+    {name:"2차 인상 여부", asset:"KODEX200", up:"인상 없이 종료 → 안도랠리", down:"예상대로 인상+추가시사 → 조정", outcome:null},
   ]},
-  {date:"2026-08-28", time:"시간 미정(통상 현지 오전 진행, 8/27~29 진행)", short:"잭슨홀", label:"잭슨홀 심포지엄", level:"high", meta:"신임 의장 Kevin Warsh 첫 연설(8/27~29)", factors:[
-    {name:"Warsh 기조연설 톤", asset:"전종목(대회 마감 4거래일 전)", up:"비둘기적 → 전반 강반등, 목표달성 확률 상승", down:"매파적 → 위험자산 조정, 만회 시간 부족 → 즉시 이익보호 전환 필요", outcome:null},
+  {date:"2026-08-28", time:"현지 오전(8/27~29 진행)", short:"잭슨홀", label:"잭슨홀 심포지엄", level:"high", meta:"신임 의장 Warsh 첫 연설", factors:[
+    {name:"Warsh 기조연설 톤", asset:"전종목", up:"비둘기적 → 강반등", down:"매파적 → 조정, 만회 시간 부족", outcome:null},
   ]},
   {date:"2026-08-31", time:"", short:"대회마감", label:"대회 마감", level:"mid", meta:"", factors:[]},
 ];
@@ -522,6 +543,7 @@ function tickClock(){
 }
 tickClock(); setInterval(tickClock, 1000);
 document.getElementById('updatedFoot').textContent = "포트폴리오 데이터 기준 "+PORTFOLIO_ASOF+" · 하유찬 제작";
+document.getElementById('portfolioAsofHint').textContent = PORTFOLIO_ASOF;
 
 /* ---- 다음 이벤트 카드 ---- */
 const upcomingSorted = events.filter(e=>dayNum(e.date)>=dayNum(todayISO)).sort((a,b)=>dayNum(a.date)-dayNum(b.date));
@@ -538,9 +560,11 @@ let prevNav = null;
 dailyHistory.forEach(h=>{
   const cum = (h.nav-START_CAPITAL)/START_CAPITAL*100;
   const daily = prevNav ? (h.nav-prevNav)/prevNav*100 : null;
+  const md = h.date.slice(5).replace('-','/');
+  const eok = (h.nav/100000000).toFixed(2)+'억';
   const tr = document.createElement('tr');
-  tr.innerHTML = `<td>${h.date}</td>
-    <td class="num">${h.nav.toLocaleString('ko-KR')}원</td>
+  tr.innerHTML = `<td>${md}</td>
+    <td class="num">${eok}</td>
     <td class="num" style="color:${daily===null?'var(--text-faint)':retColor(daily)}">${daily===null?'-':retStr(daily)}</td>
     <td class="num" style="color:${retColor(cum)}; font-weight:700;">${retStr(cum)}</td>`;
   dailyBody.appendChild(tr);
