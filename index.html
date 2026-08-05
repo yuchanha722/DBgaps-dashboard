@@ -43,12 +43,23 @@
   .sec-title .line{flex:1; height:1px; background:var(--border);}
   .sec-title .hint{font-size:11px; color:var(--text-faint); font-family:var(--mono);}
 
-  .donut-row{display:grid; grid-template-columns:340px 1fr; gap:16px;}
+  .donut-row{display:grid; grid-template-columns:minmax(380px,1fr) minmax(280px,1fr); gap:16px;}
   .donut-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:24px; display:flex; flex-direction:column; align-items:center;}
-  .donut{position:relative; width:220px; height:220px; border-radius:50%;}
+  .risk-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:24px; margin-bottom:22px; position:relative;}
+  .risk-bar{width:100%; height:44px; border-radius:8px; overflow:hidden; display:flex; background:var(--panel-2);}
+  .risk-seg{height:100%; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:12.5px; font-weight:700; color:#0A1620; min-width:0; white-space:nowrap; overflow:hidden; cursor:pointer; transition:opacity .15s; box-sizing:border-box;}
+  .risk-seg:not(:last-child){border-right:2px solid var(--panel);}
+  .risk-legend{width:100%; margin-top:20px; display:flex; flex-direction:row; gap:24px; flex-wrap:wrap; justify-content:center;}
+  .risk-legend-row{display:flex; align-items:center; gap:9px;}
+  .risk-legend-row .dot{width:10px; height:10px; border-radius:3px; flex-shrink:0;}
+  .risk-legend-row .label{font-size:12.5px; color:var(--text);}
+  .risk-legend-row .pct{font-family:var(--mono); font-size:13px; font-weight:700; margin-left:2px;}
+  .risk-legend-row .amt{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); margin-left:6px;}
+  .risk-cap-note{width:100%; margin-top:16px; padding-top:14px; border-top:1px solid var(--border); font-size:10.5px; color:var(--text-faint); line-height:1.6; text-align:center;}
+  .donut{position:relative; width:220px; height:220px; border-radius:50%; flex-shrink:0;}
   .donut svg{position:absolute; inset:0;}
   .donut svg circle{transition:opacity .15s;}
-  .donut-center{position:absolute; inset:34px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2; pointer-events:none;}
+  .donut-center{position:absolute; inset:15%; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2; pointer-events:none;}
   .donut-tooltip{position:fixed; z-index:50; background:var(--panel-2); border:1px solid var(--border); border-radius:6px; padding:10px 13px; font-size:11.5px; box-shadow:0 8px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .1s; min-width:160px;}
   .donut-tooltip .tt-name{font-weight:700; color:var(--text); font-size:12.5px;}
   .donut-tooltip .tt-cat{color:var(--text-faint); font-size:10px; margin-bottom:6px;}
@@ -212,9 +223,14 @@
 
     .donut-card{padding:16px; border-radius:6px;}
     .donut{width:170px; height:170px;}
-    .donut::after{display:none;}
-    .donut-center{inset:26px;}
     .donut-center .ret{font-size:20px;}
+    .risk-card{padding:16px; border-radius:6px;}
+    .risk-bar{height:40px;}
+    .risk-seg{font-size:11px;}
+    .risk-legend{gap:14px; margin-top:16px;}
+    .risk-legend-row .label{font-size:11.5px;}
+    .risk-legend-row .pct{font-size:12px;}
+    .risk-legend-row .amt{display:block; margin-left:0; margin-top:1px;}
     .leg-name{font-size:11.5px;}
     .leg-cat, .leg-stats{font-size:10px;}
 
@@ -316,6 +332,14 @@
       <div class="donut-tooltip" id="donutTooltip"></div>
     </div>
     <div class="donut-card" style="align-items:stretch;"><div class="legend" id="legend"></div></div>
+  </div>
+
+  <div class="sec-title"><h2>위험자산 · 안전자산 · 현금</h2><div class="line"></div><span class="hint">막대에 마우스를 올리면 상세 표시</span></div>
+  <div class="risk-card">
+    <div class="risk-bar" id="riskBar"></div>
+    <div class="risk-bar-tooltip donut-tooltip" id="riskBarTooltip"></div>
+    <div class="risk-legend" id="riskLegend"></div>
+    <div class="risk-cap-note" id="riskCapNote"></div>
   </div>
 
   <div class="sec-title"><h2>자산군별 한도 소진율 · 실제 보유내역</h2><div class="line"></div></div>
@@ -585,6 +609,79 @@ const invested = categories.flatMap(c=>c.items.map(i=>({...i, cat:c.name})));
 const investedTotal = invested.reduce((s,i)=>s+i.amt,0);
 const cash = NAV - investedTotal;
 const portfolioFlat = [...invested, {name:"현금(매수대기)", amt:cash, cat:"현금"}];
+
+// 위험자산/안전자산/현금 분류 (예수금 자산별 상한 규정 기준)
+const SAFE_CATS = ["국내채권_종합","국내채권_회사채","해외채권_종합","해외채권_회사채","금리연계형/초단기채권"];
+let riskTotal = 0, safeTotal = 0;
+const riskCatBreakdown = [], safeCatBreakdown = [];
+categories.forEach(c=>{
+  const catAmt = c.items.reduce((s,i)=>s+i.amt,0);
+  if(catAmt<=0) return;
+  if(SAFE_CATS.includes(c.name)){ safeTotal += catAmt; safeCatBreakdown.push({name:c.name, amt:catAmt}); }
+  else { riskTotal += catAmt; riskCatBreakdown.push({name:c.name, amt:catAmt}); }
+});
+const riskSafeCash = [
+  {label:"위험자산", amt:riskTotal, color:"var(--up)", capText:"규정상 한도 70%", breakdown:riskCatBreakdown},
+  {label:"안전자산", amt:safeTotal, color:"var(--sky)", capText:"규정상 한도 100%(예수금 내)", breakdown:safeCatBreakdown},
+  {label:"현금", amt:cash, color:"var(--text-faint)", capText:null, breakdown:null},
+];
+
+const riskBarEl = document.getElementById('riskBar');
+const riskLegendEl = document.getElementById('riskLegend');
+const riskTooltipEl = document.getElementById('riskBarTooltip');
+
+function showRiskTooltip(x, y, r, pct){
+  let html = `<div class="tt-name">${r.label}</div>
+    <div class="tt-row"><span>비중</span><b style="color:${r.color}">${pct.toFixed(2)}%</b></div>
+    <div class="tt-row"><span>금액</span><b>${r.amt.toLocaleString('ko-KR')}원</b></div>`;
+  if(r.breakdown && r.breakdown.length){
+    html += `<div style="margin-top:6px; padding-top:6px; border-top:1px solid var(--border);">`;
+    r.breakdown.forEach(b=>{
+      html += `<div class="tt-row"><span>${b.name}</span><b>${(b.amt/NAV*100).toFixed(1)}%</b></div>`;
+    });
+    html += `</div>`;
+  }
+  if(r.capText) html += `<div style="margin-top:6px; font-size:10px; color:var(--text-faint);">${r.capText}</div>`;
+  riskTooltipEl.innerHTML = html;
+  riskTooltipEl.style.opacity='1';
+  const pad=16; let tx=x+pad, ty=y+pad;
+  if(tx+200>window.innerWidth) tx = x-200-pad;
+  if(ty+140>window.innerHeight) ty = y-140-pad;
+  riskTooltipEl.style.left = tx+'px'; riskTooltipEl.style.top = ty+'px';
+}
+function hideRiskTooltip(){ riskTooltipEl.style.opacity='0'; }
+
+riskSafeCash.forEach(r=>{
+  const pct = Math.max(r.amt/NAV*100, 0);
+  const seg = document.createElement('div');
+  seg.className = 'risk-seg';
+  seg.style.width = pct+'%';
+  seg.style.background = r.color;
+  if(pct>=8) seg.textContent = pct.toFixed(0)+'%';
+  // 데스크톱: 마우스 호버
+  seg.addEventListener('mouseenter', ()=>{ seg.style.opacity='.85'; });
+  seg.addEventListener('mousemove', (e)=>{ showRiskTooltip(e.clientX, e.clientY, r, pct); });
+  seg.addEventListener('mouseleave', ()=>{ seg.style.opacity='1'; hideRiskTooltip(); });
+  // 모바일: 탭
+  seg.addEventListener('touchstart', (e)=>{
+    e.stopPropagation();
+    const t = e.touches[0];
+    showRiskTooltip(t.clientX, t.clientY, r, pct);
+  }, {passive:true});
+  riskBarEl.appendChild(seg);
+
+  const row = document.createElement('div'); row.className='risk-legend-row';
+  row.innerHTML = `<div class="dot" style="background:${r.color}"></div>
+    <div class="label">${r.label}</div>
+    <span class="pct" style="color:${r.color}">${pct.toFixed(1)}%</span><span class="amt">${r.amt.toLocaleString('ko-KR')}원</span>`;
+  riskLegendEl.appendChild(row);
+});
+// 막대 바깥을 탭/스크롤하면 툴팁 닫기 (모바일 대응, 도넛 툴팁과 동일 패턴)
+document.addEventListener('touchstart', hideRiskTooltip, {passive:true});
+window.addEventListener('scroll', hideRiskTooltip, {passive:true});
+
+document.getElementById('riskCapNote').textContent =
+  `규정상 한도: 위험자산 최대 70% · 안전자산 최대 100%(예수금 내 자산별 상한 기준) — 현재 위험자산 ${(riskTotal/NAV*100).toFixed(1)}%(NAV 대비)로 한도 내`;
 
 function colorOf(p){
   if(p.light && shade.light[p.cat]) return shade.light[p.cat];
