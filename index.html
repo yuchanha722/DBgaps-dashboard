@@ -81,14 +81,14 @@
 
   .cat-list{display:flex; flex-direction:column; gap:12px;}
   .cat-card{background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--catclr,var(--sky)); border-radius:8px; padding:18px 22px;}
-  .cat-card.over{border-color:var(--danger);}
+  .cat-card.over{border-color:var(--warn);}
   .cat-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
   .cat-head .name{font-size:13.5px; font-weight:700;}
   .cat-head .usage{font-family:var(--mono); font-size:12px; color:var(--text-dim);}
-  .cat-head .usage b{color:var(--sky);} .cat-head .usage b.over{color:var(--danger);}
+  .cat-head .usage b{color:var(--sky);} .cat-head .usage b.over{color:var(--warn);}
   .cat-bar{position:relative; height:7px; background:var(--panel-2); border-radius:4px; overflow:hidden; margin-bottom:14px;}
   .cat-fill{position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:var(--sky);}
-  .cat-fill.over{background:var(--danger);}
+  .cat-fill.over{background:var(--warn);}
   .holdings{display:flex; flex-direction:column; gap:0;}
   .h-row{display:flex; flex-direction:column; gap:5px; padding:9px 0 9px 18px; border-top:1px solid var(--border); position:relative;}
   .h-row::before{content:"›"; position:absolute; left:2px; top:9px; color:var(--text-faint);}
@@ -279,7 +279,7 @@
     <div class="hdr-left">
       <div class="eyebrow">투자이꼴무협팀 · 제12회 GAPS ETF 투자대회</div>
       <h1>포트폴리오 대시보드</h1>
-      <div class="sub" id="asof">포트폴리오 기준 2026.08.06 리밸런싱(8/5 종가 기준 산정)</div>
+      <div class="sub" id="asof">포트폴리오 기준 2026.08.14 종가</div>
     </div>
     <div class="hdr-right">
       <div class="clock-card">
@@ -291,10 +291,10 @@
   </div>
 
   <div class="grid4">
-    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-10.50%</div><div class="foot">NAV 894,957,842원(불변) · 전면 리밸런싱(가격변동 아님)</div></div>
+    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-6.39%</div><div class="foot">NAV 936,109,349원 · 8/13 대비 +0.87%, 5종목 상승·WTI만 소폭 하락</div></div>
     <div class="card"><div class="k">다음 이벤트</div><div class="v warn" id="nextEvtD">-</div><div class="foot" id="nextEvtTxt">-</div></div>
-    <div class="card"><div class="k">이번주 최대 변동성</div><div class="v" style="color:var(--danger)">8/6 S&P500 청산</div><div class="foot">TIGER S&P500 전량 매도 → 국내섹터(AI반도체TOP2+) 한도 15% 완전 충족, 잔액은 KODEX200 매수 — 해외주식_지수 카테고리 공석</div></div>
-    <div class="card"><div class="k">ℹ 한도 체크(매입시점 기준)</div><div class="v" style="color:var(--danger)">3개 카테고리 한도 도달</div><div class="foot">국내섹터(AI반도체TOP2+) 15.00%, 해외섹터(ACE) 10.00%, FX및원자재(WTI) 20.00% — 셋 다 한도 정확히 도달. 해외주식_지수는 완전 공석(0%)</div></div>
+    <div class="card"><div class="k">이번주 최대 변동성</div><div class="v" style="color:var(--up)">8/14 반도체 강세 지속</div><div class="foot">KODEX AI반도체TOP2+ +3.16%, KODEX200 +2.60%가 견인 — WTI원유선물만 -0.95% 소폭 하락</div></div>
+    <div class="card"><div class="k">ℹ 카테고리별 평가비중(참고용)</div><div class="v" style="color:var(--sky)">매입시점 기준 전부 적합</div><div class="foot">국내섹터 15.26%·해외섹터 9.75%·FX및원자재 20.96%(평가액 기준). 현금 5.59%</div></div>
   </div>
 
   <div class="sec-title"><h2>일별 수익률 기록</h2><div class="line"></div></div>
@@ -306,23 +306,21 @@
   </div>
 
   <div class="card" style="margin-bottom:22px;">
-    <div class="k">📊 이번주 시장 진단 (8/6 리밸런싱 2차, 8/5 종가 기준 산정)</div>
+    <div class="k">📊 이번주 시장 진단 (8/14 종가 반영)</div>
     <div class="foot" style="font-size:12.5px; line-height:1.7; margin-top:4px;">
-      · <b style="color:var(--danger);">해외주식_지수 카테고리 완전 청산</b> — TIGER 미국S&P500 전량 매도(3,477만원), 미국 지수 관련 보유는 이제 하나도 없는 상태<br>
-      · <b style="color:var(--text);">자금 배분</b>: 매도대금 중 1,266만원은 <b>국내주식_섹터(KODEX AI반도체TOP2+)를 한도 15%까지 완전히 채우는 데</b> 사용, 남은 2,211만원은 <b>KODEX 200 매수</b>로 전액 투입<br>
-      · <b style="color:var(--text);">결과</b>: KODEX AI반도체TOP2+ 121,580,711원→134,243,676원(정확히 15.00%), KODEX200 153,667,966원→175,780,582원(19.64%). NAV 894,957,842원 불변(가격변동 아닌 순수 재배분)<br>
-      · <b style="color:var(--danger);">누적 한도 현황</b>: 이제 <b>국내섹터·해외섹터·FX및원자재 3개 카테고리가 전부 한도에 정확히 도달</b> — 이 세 곳은 완전히 신규매수 불가. 남은 신규매수 여지는 국내주식_지수(25.00%/30%)뿐<br>
-      · <b style="color:var(--warn);">유의</b>: 미국 주식 익스포저가 전무해지면서 국내(반도체·코스피)와 원자재(원유)에 극도로 집중된 구조 — 국내 이벤트(8/27 금통위②)와 유가 변동에 대한 민감도가 한층 더 커짐
+      · <b style="color:var(--up);">반도체 강세 이틀 연속, WTI만 소폭 하락</b> — KODEX AI반도체TOP2+ +3.16%, KODEX200 +2.60%, ACE글로벌반도체TOP4+ +0.81%, 미국채10년선물 +0.12%, 단기통안채 +0.01%(보합), WTI원유선물 -0.95%(소폭 하락)<br>
+      · <b style="color:var(--text);">결과</b>: NAV 928,075,502원 → <b>936,109,349원</b>(+0.87%). 시작자본 대비 -7.19%→<b>-6.39%</b>로 개선<br>
+      · <b style="color:var(--sky);">카테고리별 평가비중</b>: 국내섹터 15.26%·해외섹터 9.75%·FX및원자재 20.96%(매입시점 기준 전부 적합, 참고용)
     </div>
   </div>
 
   <div class="card" style="margin-bottom:22px; border-color:var(--danger);">
-    <div class="k" style="color:var(--danger);">🔍 구성종목 심층분석 — 숨은 집중 리스크 발견</div>
+    <div class="k" style="color:var(--danger);">🔍 구성종목 심층분석 — 숨은 집중 리스크</div>
     <div class="foot" style="font-size:12.5px; line-height:1.8; margin-top:4px;">
       <b style="color:var(--text);">ACE 글로벌반도체TOP4 Plus</b> (2026-07-07 기준 실제 구성, 10종목): SK하이닉스 <b style="color:var(--danger);">31.17%</b> · ASML 16.98% · TSMC 16.51% · 엔비디아 14.72% · AMD 5.07% · 어플라이드머티어리얼즈 3.50% · 삼성전자 3.45% · 퀄컴 3.20% · 텍사스인스트루먼츠 3.15% · 브로드컴 2.35%<br>
-      → <b style="color:var(--danger);">"글로벌"이라는 이름과 달리 SK하이닉스+삼성전자 합산 34.6%가 한국 상장사입니다.</b> 국민연금 매도 압력을 피하려고 편입한 종목인데, 실제로는 KODEX AI반도체TOP2플러스와 동일한 리스크(SK하이닉스 집중)에 추가로 노출돼 있었습니다. 포트폴리오 전체 SK하이닉스 실질 노출액은 KODEX AI반도체TOP2플러스분(약 50%+)과 이 펀드분(31.17%)을 합쳐 기존 추정보다 상당히 큽니다.<br><br>
-      <b style="color:var(--text);">TIGER 미국테크TOP10 INDXX</b> (2026-07-13 기준, 10종목): 엔비디아 18.43% · 애플 18.17% · 알파벳 16.90% · 마이크로소프트 11.01% · 아마존 9.48% · 브로드컴 7.33% · 메타 6.26% · 테슬라 4.64% · 마이크론 4.36% · AMD 3.47%<br>
-      → 애플 비중이 1위(18.17%)로 가장 큰데 그동안 애플 실적 이벤트를 캘린더에서 놓치고 있었습니다(현재 7/30 이벤트에 반영됨).
+      → <b style="color:var(--danger);">"글로벌"이라는 이름과 달리 SK하이닉스+삼성전자 합산 34.6%가 한국 상장사입니다.</b> KODEX AI반도체TOP2플러스(SK하이닉스 비중 높음)와 동일한 리스크에 중복 노출 — 포트폴리오 전체 SK하이닉스 실질 노출액은 두 펀드분을 합쳐 카테고리 캡(국내섹터15%+해외섹터10%=25%)이 시사하는 것보다 훨씬 큽니다.<br><br>
+      <b style="color:var(--text);">TIGER 미국테크TOP10 INDXX는 8/6 전량 매도로 더 이상 보유하지 않음</b> — 과거 이 종목의 애플·엔비디아 집중 리스크는 현재 무관.<br><br>
+      <b style="color:var(--warn);">현재 가장 큰 단일 리스크는 KODEX WTI원유선물(H)</b> (평가액 기준 22.14%, 매입시점 20% 한도로 편입) — 다른 위험자산과 상관관계가 낮은 별도 팩터라 분산 효과는 있지만, 포트폴리오 등락을 좌우하는 단일 변수로는 이미 반도체 2종목 합산보다 큰 비중입니다.
     </div>
   </div>
 
@@ -342,7 +340,7 @@
     <div class="risk-legend" id="riskLegend"></div>
   </div>
 
-  <div class="sec-title"><h2>자산군별 한도 소진율 · 실제 보유내역</h2><div class="line"></div></div>
+  <div class="sec-title"><h2>자산군별 한도 소진율 · 실제 보유내역</h2><div class="line"></div><span class="hint">한도는 매입시점 기준 — 이후 평가액이 초과해도 규정 위반 아님</span></div>
   <div class="cat-list" id="catList"></div>
 
   <div class="sec-title"><h2>출석 캘린더 — 7월 개장전 시황공유</h2><div class="line"></div><span class="hint">하유찬 · 남영욱 · 임우진</span></div>
@@ -379,8 +377,8 @@
 /* ===================== 데이터 (여기만 매일 갱신) ===================== */
 const RANGE_START = "2026-07-10";
 const RANGE_END = "2026-08-31";
-const PORTFOLIO_ASOF = "2026.08.06 (리밸런싱, 8/5 종가 기준 산정)";
-const NAV = 894957842;
+const PORTFOLIO_ASOF = "2026.08.14 종가";
+const NAV = 936109349;
 const START_CAPITAL = 1000000000;
 
 // 카테고리별 색상 계열 (블루=국내지수, 인디고=국내섹터, 틸=해외지수, 마젠타=해외섹터, 앰버=국내채권, 오렌지=해외채권, 그레이=현금)
@@ -408,26 +406,29 @@ const dailyHistory = [
   {date:"2026-08-04", nav:875921169},
   {date:"2026-08-05", nav:894957842},
   {date:"2026-08-06", nav:894957842},
+  {date:"2026-08-10", nav:893481629},
+  {date:"2026-08-12", nav:911532055},
+  {date:"2026-08-13", nav:928075502},
+  {date:"2026-08-14", nav:936109349},
 ];
 
 const categories = [
   {name:"국내주식_지수", cap:30, items:[
-    {name:"KODEX 200", amt:175780582, ret:-9.53, prevRet:-9.53},
-    {name:"KODEX 코스닥150", amt:47958879, ret:-9.18, prevRet:-9.18, light:true},
+    {name:"KODEX 200", amt:185488118, ret:-4.53, prevRet:-6.95},
   ]},
   {name:"국내주식_섹터", cap:15, items:[
-    {name:"KODEX AI반도체TOP2플러스", amt:134243676, ret:-2.39, prevRet:-2.39},
+    {name:"KODEX AI반도체TOP2플러스", amt:142812421, ret:3.84, prevRet:0.66},
   ]},
   {name:"해외주식_지수", cap:30, items:[]},
   {name:"해외주식_섹터", cap:10, items:[
-    {name:"ACE 글로벌반도체TOP4 Plus", amt:89495784, ret:-4.32, prevRet:-7.45},
+    {name:"ACE 글로벌반도체TOP4 Plus", amt:91230110, ret:-2.47, prevRet:-3.25},
   ]},
   {name:"FX 및 원자재", cap:20, items:[
-    {name:"KODEX WTI원유선물(H)", amt:178991568, ret:0.05, prevRet:0.06},
+    {name:"KODEX WTI원유선물(H)", amt:196183333, ret:9.65, prevRet:10.71},
   ]},
-  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:187250723, ret:-0.07, prevRet:-0.09}]},
+  {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:187400744, ret:0.01, prevRet:0.01}]},
   {name:"국내채권_회사채", cap:30, items:[]},
-  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:81236630, ret:-6.52, prevRet:-6.52}]},
+  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:80662970, ret:-7.18, prevRet:-7.29}]},
   {name:"해외채권_회사채", cap:30, items:[]},
   {name:"금리연계형/초단기채권", cap:50, items:[]},
 ];
@@ -493,6 +494,12 @@ const comments = [
   {name:"8/4 - 코스피 +1.62% 반등, 엔캐리 우려 일단 진정", text:"간밤 美 증시 강세와 원/달러 환율 안정(1,434.8원)에 힘입어 반등. 다만 증권가는 8월 중순까지 레버리지 청산 압력이 이어질 수 있다며 추세전환 단정엔 신중한 입장.", ts:"2026-08-05"},
   {name:"8/5 - 나스닥100 전량 청산, WTI원유선물 신규 편입", text:"변동성 노출 극대화 방향으로 대대적 리밸런싱. 나스닥100 전량 매도, S&P500·미국채선물 축소, KODEX WTI원유선물(H)을 새로 편입(15.6%). 위험자산 비중이 69.2%까지 늘어나며 한도(70%) 턱밑까지 근접.", ts:"2026-08-06"},
   {name:"8/6 - 테크TOP10 전량 매도, 위험70%·안전30% 목표배분 완성", text:"TIGER테크TOP10 전량 매도, ACE글로벌반도체TOP4+·KODEX WTI원유선물(H)을 각 한도(10%·20%)까지 채우고 나머지는 단기통안채로 안전자산 30% 완성. 현금 0%, 위험자산을 한도까지 꽉 채운 극공격 구조로 전환.", ts:"2026-08-06"},
+  {name:"8/6 - S&P500 전량매도 후 국내섹터 한도 완성, 잔액 코스피 매수", text:"TIGER S&P500 전량 매도, 대금 중 일부로 국내주식_섹터(AI반도체TOP2+)를 한도 15%까지 완전히 채우고 나머지는 KODEX200 매수. 미국 주식 익스포저가 완전히 사라지며 국내·원자재 집중 구조로 전환.", ts:"2026-08-06"},
+  {name:"8/10 - 코스닥150 전량매도, 오늘 개별가 반영(계산 정정)", text:"코스닥150 14,780원에 전량 매도(52,331,652원 현금화). 8/6 실제 리밸런싱 금액에 오늘 가격 등락률을 정확히 적용해 재계산 — WTI원유선물(+10.59%)·코스닥150(+9.12%)이 KODEX200·AI반도체TOP2+ 하락분을 상쇄해 NAV는 사실상 보합(-0.16%). 직전에 반영했던 큰 폭 하락(-13.75%)은 참고용 스크린샷 수량을 잘못 섞어써서 생긴 계산 오류였음.", ts:"2026-08-10"},
+  {name:"8/12 - 전 종목 상승", text:"보유 6종목(KODEX200·AI반도체TOP2+·ACE·WTI원유선물·단기통안채·미국채10년선물) 전부 플러스 마감. AI반도체TOP2+ +5.95%, KODEX200 +4.01%가 견인.", ts:"2026-08-12"},
+  {name:"8/13 - 반도체 급등, WTI만 하락 (계산 정정: 종가 107,270원)", text:"KODEX AI반도체TOP2+ +6.97%, KODEX200 +3.89%, ACE글로벌반도체TOP4+ +2.76%로 국내 반도체·지수 강세. 단기통안채·미국채10년선물은 보합권, KODEX WTI원유선물(H)만 -0.99%로 하락. NAV 911,532,055원 → 928,075,502원(+1.81%). ※ 이전에 8/13 종가로 잘못 반영했던 108,515원은 오류였으며, 실제 종가 107,270원으로 재계산함.", ts:"2026-08-13"},
+  {name:"8/13 - 美 7월 PPI 예상 하회, 인플레둔화 재확인", text:"전월대비 보합(0.0%, 예상 +0.2%), 전년대비 +4.7%(예상 +4.9%, 전월 +5.5%)로 예상을 하회. 전날 CPI에 이어 인플레 둔화 흐름이 재확인되며 8/19 FOMC 의사록·8/26 PCE를 앞두고 비둘기적 재료로 소화.", ts:"2026-08-13"},
+  {name:"8/14 - 반도체 강세 이틀 연속", text:"KODEX AI반도체TOP2+ +3.16%, KODEX200 +2.60%, ACE글로벌반도체TOP4+ +0.81%로 국내 반도체·지수 강세 지속. 단기통안채·미국채10년선물은 소폭 플러스, KODEX WTI원유선물(H)만 -0.95% 소폭 하락. NAV 928,075,502원 → 936,109,349원(+0.87%).", ts:"2026-08-14"},
 ];
 
 const events = [
@@ -542,11 +549,11 @@ const events = [
   {date:"2026-08-04", time:"美 장마감 후(발표완료) → 한국시간 새벽 반영", short:"AMD", label:"AMD 2분기 실적 - 어닝서프라이즈에도 주가는 급락", level:"mid", meta:"매출 $115.4억(예상 $112.8억 상회, +50%YoY), EPS $1.66(예상 $1.62 상회), 데이터센터 매출 +107%YoY. 정규장 +7% 마감했으나 3분기 가이던스($130억)가 시장기대($140억)에 못미쳐 시간외 -8~9% 급락 — sell the news 패턴 반복", factors:[
     {name:"데이터센터 GPU 성장세(실제: 매출 2배 이상 증가, 사상 최대 분기 매출·수익성)", asset:"ACE글로벌반도체TOP4+·TIGER테크TOP10", up:"가이던스 상회 → 상승", down:"3분기 가이던스가 기대치 못미침 → 시간외 급락으로 실현", outcome:"down"},
   ]},
-  {date:"2026-08-13", time:"21:30(KST)", short:"PPI", label:"美 7월 PPI", level:"mid", meta:"CPI(8/12)의 선행지표", factors:[
-    {name:"PPI 전월대비", asset:"전종목(간접)", up:"예상 부합·하회 → 인플레둔화 지속 확인", down:"예상 상회 → 인플레 재점화 우려", outcome:null},
+  {date:"2026-08-13", time:"21:30(KST)", short:"PPI", label:"美 7월 PPI", level:"mid", meta:"실제: 전월대비 보합(0.0%, 예상 +0.2%) · 전년대비 +4.7%(예상 +4.9%, 전월 +5.5%) — 예상 하회로 확정", factors:[
+    {name:"PPI 전월대비", asset:"전종목(간접)", up:"예상 부합·하회 → 인플레둔화 지속 확인", down:"예상 상회 → 인플레 재점화 우려", outcome:"up"},
   ]},
   {date:"2026-08-27", time:"엔비디아 실적 한국시간 06:00경(美 현지 8/26 장마감후) · 금통위② 09:00경", short:"엔비디아·금통위②", label:"엔비디아 실적 + 한국은행 금통위 2차 — 같은 날 겹침", level:"high", meta:"⚠ 기존 8/25로 넣어뒀던 엔비디아 실적일 정정 — 실제로는 8/26(미 동부기준) 발표, 한국시간 8/27 새벽 도착. 같은 날 오전 금통위②까지 있어 이날이 8월 최대 변동성 구간 중 하나", factors:[
-    {name:"엔비디아 데이터센터 GPU 매출", asset:"ACE글로벌반도체TOP4+·TIGER테크TOP10(간접)", up:"서프라이즈 → AI버블 논쟁 진정", down:"가이던스 실망 → 큰 폭 하락 리스크", outcome:null},
+    {name:"엔비디아 데이터센터 GPU 매출", asset:"ACE글로벌반도체TOP4+(간접)·KODEX AI반도체TOP2+(간접)", up:"서프라이즈 → AI버블 논쟁 진정", down:"가이던스 실망 → 큰 폭 하락 리스크", outcome:null},
     {name:"금통위 2차 인상 여부", asset:"KODEX200", up:"인상 없이 종료 → 안도랠리", down:"예상대로 인상+추가시사 → 조정", outcome:null},
   ]},
   {date:"2026-08-28", time:"현지 오전(8/27~29 진행)", short:"잭슨홀", label:"잭슨홀 심포지엄", level:"high", meta:"신임 의장 Warsh 첫 연설", factors:[
@@ -792,7 +799,7 @@ categories.forEach(c=>{
     return `<div class="h-row"><div class="h-top"><div class="nm">${i.name}</div>${retHtml}</div><div class="h-bottom"><span class="pc">${ipct.toFixed(2)}%</span><span class="amt">${i.amt.toLocaleString('ko-KR')}원</span>${deltaStr}</div></div>`;
   }).join('') : `<div class="empty-cat">보유 없음</div>`;
   card.innerHTML = `<div class="cat-head"><div class="name">${c.name}</div><div class="usage"><b class="${isOver?'over':''}">${usedPct.toFixed(2)}%</b> / ${c.cap}%</div></div>
-    <div class="cat-bar"><div class="cat-fill ${isOver?'over':''}" style="width:${Math.min(barPct,100)}%; background:${isOver?'var(--danger)':catColor[c.name]}"></div></div>
+    <div class="cat-bar"><div class="cat-fill ${isOver?'over':''}" style="width:${Math.min(barPct,100)}%; background:${isOver?'var(--warn)':catColor[c.name]}"></div></div>
     <div class="holdings">${holdingsHtml}</div>`;
   catList.appendChild(card);
 });
