@@ -43,7 +43,7 @@
   .sec-title .line{flex:1; height:1px; background:var(--border);}
   .sec-title .hint{font-size:11px; color:var(--text-faint); font-family:var(--mono);}
 
-  .donut-row{display:grid; grid-template-columns:minmax(380px,1fr) minmax(280px,1fr); gap:16px;}
+  .donut-row{display:grid; grid-template-columns:minmax(300px,340px) 1fr; gap:16px;}
   .donut-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:24px; display:flex; flex-direction:column; align-items:center;}
   .risk-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:24px; margin-bottom:22px; position:relative;}
   .risk-bar{width:100%; height:44px; border-radius:8px; overflow:hidden; display:flex; background:var(--panel-2);}
@@ -175,7 +175,8 @@
   /* comments */
   .comment-card{background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:20px 22px;}
   .c-notice{font-size:11px; color:var(--text-faint); margin-bottom:14px;}
-  .hist-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:8px; margin-bottom:22px;}
+  .hist-scroll{overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch; border-radius:8px; margin-bottom:22px; max-height:280px;}
+  .hist-table thead th{position:sticky; top:0; z-index:2;}
   .hist-table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; table-layout:fixed;}
   .hist-table thead th{text-align:left; font-size:11px; color:var(--text-dim); font-weight:700; letter-spacing:.03em; padding:11px 10px; background:var(--panel-2); border-bottom:1px solid var(--border); white-space:nowrap;}
   .hist-table thead th.num{text-align:right;}
@@ -340,10 +341,10 @@
     <div class="risk-legend" id="riskLegend"></div>
   </div>
 
-  <div class="sec-title"><h2>자산군별 한도 소진율 · 실제 보유내역</h2><div class="line"></div><span class="hint">한도는 매입시점 기준 — 이후 평가액이 초과해도 규정 위반 아님</span></div>
+  <div class="sec-title"><h2>자산군별 한도 소진율 · 실제 보유내역</h2><div class="line"></div></div>
   <div class="cat-list" id="catList"></div>
 
-  <div class="sec-title"><h2>출석 캘린더 — 7월 개장전 시황공유</h2><div class="line"></div><span class="hint">하유찬 · 남영욱 · 임우진</span></div>
+  <div class="sec-title"><h2>출석 캘린더 — 7월 개장전 시황공유</h2><div class="line"></div></div>
   <div class="att-card">
     <div class="att-members" id="attMembers"></div>
     <div class="cal-grid" id="calGrid"></div>
@@ -592,21 +593,24 @@ if(upcomingSorted.length){
   document.getElementById('nextEvtTxt').textContent = ne.date.slice(5).replace('-','/')+" "+ne.label;
 }
 
-/* ---- 일별 수익률 기록 ---- */
+/* ---- 일별 수익률 기록 (최신 날짜가 위로 오도록 표시) ---- */
 const dailyBody = document.getElementById('dailyHistBody');
 let prevNav = null;
-dailyHistory.forEach(h=>{
+const dailyRows = dailyHistory.map(h=>{
   const cum = (h.nav-START_CAPITAL)/START_CAPITAL*100;
   const daily = prevNav ? (h.nav-prevNav)/prevNav*100 : null;
+  prevNav = h.nav;
+  return {...h, cum, daily};
+});
+[...dailyRows].reverse().forEach(h=>{
   const md = h.date.slice(5).replace('-','/');
   const eok = (h.nav/100000000).toFixed(2)+'억';
   const tr = document.createElement('tr');
   tr.innerHTML = `<td>${md}</td>
     <td class="num">${eok}</td>
-    <td class="num" style="color:${daily===null?'var(--text-faint)':retColor(daily)}">${daily===null?'-':retStr(daily)}</td>
-    <td class="num" style="color:${retColor(cum)}; font-weight:700;">${retStr(cum)}</td>`;
+    <td class="num" style="color:${h.daily===null?'var(--text-faint)':retColor(h.daily)}">${h.daily===null?'-':retStr(h.daily)}</td>
+    <td class="num" style="color:${retColor(h.cum)}; font-weight:700;">${retStr(h.cum)}</td>`;
   dailyBody.appendChild(tr);
-  prevNav = h.nav;
 });
 
 /* ---- portfolio + donut + legend ---- */
