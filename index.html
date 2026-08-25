@@ -292,10 +292,10 @@
   </div>
 
   <div class="grid4">
-    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-0.84%</div><div class="foot">NAV 991,573,058원</div></div>
+    <div class="card"><div class="k">현재 수익률</div><div class="v" style="color:var(--down)">-2.76%</div><div class="foot">NAV 972,421,660원</div></div>
     <div class="card"><div class="k">다음 이벤트</div><div class="v warn" id="nextEvtD">-</div><div class="foot" id="nextEvtTxt">-</div></div>
-    <div class="card"><div class="k">8/21 코스닥 약세</div><div class="v" style="color:var(--down)">코스닥150 -5.51%</div><div class="foot">WTI +1.93%, KODEX200 +1.65%는 강세 — 미국채10년선물 -0.60%</div></div>
-    <div class="card"><div class="k">위험·안전 배분</div><div class="v" style="color:var(--sky)">71.04 : 28.96</div><div class="foot">평가액 기준 드리프트(매입시점 70:30) · 현금 0.00%</div></div>
+    <div class="card"><div class="k">8/24 반도체 조정</div><div class="v" style="color:var(--down)">-1.93%</div><div class="foot">AI반도체TOP2+ -4.56%, KODEX200 -3.62% — 코스닥150만 +1.92% 상승</div></div>
+    <div class="card"><div class="k">위험·안전 배분</div><div class="v" style="color:var(--sky)">70.52 : 29.48</div><div class="foot">평가액 기준 드리프트(매입시점 70:30) · 현금 0.00%</div></div>
   </div>
 
   <div class="sec-title"><h2>일별 수익률 기록</h2><div class="line"></div></div>
@@ -359,8 +359,8 @@
 /* ===================== 데이터 (여기만 매일 갱신) ===================== */
 const RANGE_START = "2026-07-10";
 const RANGE_END = "2026-08-31";
-const PORTFOLIO_ASOF = "2026.08.21 종가";
-const NAV = 991573058;
+const PORTFOLIO_ASOF = "2026.08.24 종가";
+const NAV = 972421660;
 const START_CAPITAL = 1000000000;
 
 // 카테고리별 색상 계열 (블루=국내지수, 인디고=국내섹터, 틸=해외지수, 마젠타=해외섹터, 앰버=국내채권, 오렌지=해외채권, 그린=FX및원자재, 그레이=현금)
@@ -397,26 +397,27 @@ const dailyHistory = [
   {date:"2026-08-19", nav:960797301},
   {date:"2026-08-20", nav:986506067},
   {date:"2026-08-21", nav:991573058},
+  {date:"2026-08-24", nav:972421660},
 ];
 
 const categories = [
   {name:"국내주식_지수", cap:30, items:[
-    {name:"KODEX 200", amt:209027224, ret:8.78, prevRet:7.01},
-    {name:"KODEX 코스닥150", amt:32802934, ret:-7.78, prevRet:-2.40, light:true},
+    {name:"KODEX 200", amt:201453361, ret:4.84, prevRet:8.78},
+    {name:"KODEX 코스닥150", amt:33432389, ret:-6.01, prevRet:-7.78, light:true},
   ]},
   {name:"국내주식_섹터", cap:15, items:[
-    {name:"KODEX AI반도체TOP2플러스", amt:157106153, ret:9.01, prevRet:8.81},
+    {name:"KODEX AI반도체TOP2플러스", amt:149949897, ret:4.04, prevRet:9.01},
   ]},
   {name:"해외주식_지수", cap:30, items:[]},
   {name:"해외주식_섹터", cap:10, items:[
-    {name:"ACE 글로벌반도체TOP4 Plus", amt:97294819, ret:1.26, prevRet:1.45},
+    {name:"ACE 글로벌반도체TOP4 Plus", amt:94802007, ret:-1.33, prevRet:1.26},
   ]},
   {name:"FX 및 원자재", cap:20, items:[
-    {name:"KODEX WTI원유선물(H)", amt:208230430, ret:16.38, prevRet:14.18},
+    {name:"KODEX WTI원유선물(H)", amt:206086818, ret:15.18, prevRet:16.38},
   ]},
   {name:"국내채권_종합", cap:50, items:[{name:"TIGER 단기통안채", amt:208360727, ret:0.05, prevRet:0.05}]},
   {name:"국내채권_회사채", cap:30, items:[]},
-  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:78750770, ret:-9.38, prevRet:-8.83}]},
+  {name:"해외채권_종합", cap:50, items:[{name:"TIGER 미국채10년선물", amt:78336460, ret:-9.86, prevRet:-9.38}]},
   {name:"해외채권_회사채", cap:30, items:[]},
   {name:"금리연계형/초단기채권", cap:50, items:[]},
 ];
@@ -492,6 +493,7 @@ const comments = [
   {name:"8/19 - 유휴 현금 재편입, 코스닥150 축소로 캡 목표 정확히 도달", text:"8/18 매도로 확보한 현금 488,805,564원을 KODEX200(101,105원)·AI반도체TOP2+(36,955원)·ACE글로벌반도체TOP4+(76,700원)·코스닥150(14,975원)에 1차 매수. 이후 KODEX200·국내섹터·해외섹터를 정확히 20%·15%·10% 캡까지 채우기 위해 코스닥150 비중을 8.85%→3.70%로 축소해 재원(49,507,828원)을 마련, 3종목에 재배분. 나머지 현금 20,876,616원은 TIGER 단기통안채에 추가 투입. 결과: KODEX200 20.00%·AI반도체TOP2+ 15.00%·ACE 10.00%·코스닥150 3.70%·WTI 21.30%·단기통안채 21.68%·미국채10년선물 8.32%. 위험자산 70.00% / 안전자산 30.00% / 현금 0.00% 목표 배분 완성. 순수 재배분 거래라 NAV는 8/18 종가(960,797,301원) 대비 변동 없음.", ts:"2026-08-19"},
   {name:"8/20 - 국내 반도체 급등, 채권·WTI는 소폭 조정", text:"KODEX AI반도체TOP2+ +8.81%, KODEX200 +7.01%, ACE글로벌반도체TOP4+ +1.45%로 재편입한 반도체 포지션이 크게 반등. 반면 코스닥150 -2.40%, WTI원유선물 -0.17%, 미국채10년선물 -0.92%는 하락, 단기통안채는 보합(+0.04%). NAV 960,797,301원 → 986,506,067원(+2.68%). 시작자본 대비 -3.92%→-1.35%로 개선. 위험자산 평가비중은 70.00%→70.85%로 소폭 드리프트(매입시점 기준 위반 아님).", ts:"2026-08-20"},
   {name:"8/21 - 코스닥150 약세, WTI·KODEX200은 강세", text:"KODEX WTI원유선물(H) +1.93%, KODEX200 +1.65%, KODEX AI반도체TOP2+ +0.19%는 상승. 반면 코스닥150 -5.51%로 크게 밀리고, 미국채10년선물 -0.60%, ACE글로벌반도체TOP4+ -0.19%도 소폭 하락. 단기통안채는 보합. NAV 986,506,067원 → 991,573,058원(+0.51%). 시작자본 대비 -1.35%→-0.84%로 개선. 위험자산 평가비중 70.85%→71.04%.", ts:"2026-08-21"},
+  {name:"8/24 - 반도체 조정, 코스닥150만 반등", text:"KODEX AI반도체TOP2+ -4.56%, KODEX200 -3.62%, ACE글로벌반도체TOP4+ -2.56%로 반도체·지수 전반 조정. WTI원유선물 -1.03%, 미국채10년선물 -0.53%도 하락. 코스닥150만 +1.92%로 유일하게 상승, 단기통안채는 보합. NAV 991,573,058원 → 972,421,660원(-1.93%). 시작자본 대비 -0.84%→-2.76%로 후퇴. 위험자산 평가비중 71.04%→70.52%.", ts:"2026-08-24"},
 ];
 
 const events = [
